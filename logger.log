@@ -202,6 +202,33 @@ Method:GET; URL:/register; Status:304; Message: Not Modified; DateTime: 19/06/20
 Method:GET; URL:/login; Status:304; Message: Not Modified; DateTime: 19/06/2021; ResponseTime: 0 ms
 Method:GET; URL:/register; Status:304; Message: Not Modified; DateTime: 19/06/2021; ResponseTime: 0 ms
 Method:GET; URL:/; Status:304; Message: Not Modified; DateTime: 20/06/2021; ResponseTime: 64 ms
-Method:GET; URL:/; Status:304; Message: Not Modified; DateTime: 23/06/2021; ResponseTime: 70 ms
-Method:GET; URL:/login; Status:304; Message: Not Modified; DateTime: 23/06/2021; ResponseTime: 5 ms
-Method:GET; URL:/register; Status:304; Message: Not Modified; DateTime: 23/06/2021; ResponseTime: 2 ms
+Method:POST; URL:/user/register; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 14 ms
+Method:POST; URL:/developer/register; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 50 ms
+Method:POST; URL:/developer/register; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 113 ms
+Method:POST; URL:/developer/register; Status:undefined; Message: undefined; DateTime: 24/06/2021; ResponseTime: NaN ms
+Method:POST; URL:/user/register; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 18 ms
+Method:POST; URL:/user/register; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 3 ms
+Method:POST; URL:/user/register; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 21 ms
+Method:POST; URL:/user/register; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 3 ms
+Method:POST; URL:/user/register; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 26 ms
+Method:POST; URL:/user/register; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 2 ms
+Method:POST; URL:/user/register; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 1 ms
+Method:POST; URL:/user/register; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 30 ms
+Method:POST; URL:/user/register; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 11 ms
+Method:POST; URL:/user/register; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 18 ms
+Method:POST; URL:/user/register; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 140 ms
+Method:POST; URL:/user/register; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 118 ms
+Method:POST; URL:/user/register; Status:201; Message: Created; DateTime: 24/06/2021; ResponseTime: 366 ms
+Method:POST; URL:/user/register; Status:201; Message: Created; DateTime: 24/06/2021; ResponseTime: 398 ms
+Method:POST; URL:/user/register; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 91 ms
+Method:POST; URL:/user/Register; Status:201; Message: Created; DateTime: 24/06/2021; ResponseTime: 418 ms
+Method:POST; URL:/user/login; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 7 ms
+Method:POST; URL:/user/login; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 3 ms
+Method:POST; URL:/user/login; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 5 ms
+Method:POST; URL:/user/login; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 383 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 231 ms
+Method:GET; URL:/user; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 407 ms
+Method:GET; URL:/user; Status:400; Message: Bad Request; DateTime: 24/06/2021; ResponseTime: 200 ms
+Method:GET; URL:/user; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 463 ms
+Method:GET; URL:/user; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 423 ms
+Method:GET; URL:/user; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 481 ms
