@@ -53,6 +53,7 @@ const loginClient = async (email, password) =>{
 
 module.exports = {
     'checkBy' : checkBy,
+    'changePassDev' : changePassDev,
     'checkPassword' : checkPassword,
     'findBy' : findBy,
     'getPassword' : getPassword,
