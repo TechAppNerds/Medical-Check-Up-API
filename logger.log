@@ -232,3 +232,5 @@ Method:GET; URL:/user; Status:400; Message: Bad Request; DateTime: 24/06/2021; R
 Method:GET; URL:/user; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 463 ms
 Method:GET; URL:/user; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 423 ms
 Method:GET; URL:/user; Status:200; Message: OK; DateTime: 24/06/2021; ResponseTime: 481 ms
+Method:POST; URL:/user/register; Status:undefined; Message: undefined; DateTime: 03/07/2021; ResponseTime: NaN ms
+Method:POST; URL:/user/register; Status:undefined; Message: undefined; DateTime: 03/07/2021; ResponseTime: NaN ms
