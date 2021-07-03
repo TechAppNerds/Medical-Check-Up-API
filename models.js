@@ -5,8 +5,17 @@ const checkBy = async(table, by, value) => {
     return result.length
 }
 
-const changePassDev = async( email, password) => {
-    return await dbase.executeQueryWithParam(`UPDATE developer SET password=${password} WHERE email = ${email}`) 
+const changePass = async( table, email, password) => {
+    return await dbase.executeQueryWithParam(`UPDATE ${table} SET password=${password} WHERE email = ${email}`) 
+}
+
+const updateData = async( table, email, name, tanggal_lahir, no_telp, saldo) => {
+    return await dbase.executeQueryWithParam(`UPDATE ${table} SET nama=${name}, tanggal_lahir = '${tanggal_lahir}', no_telp = '${no_telp}', saldo = '${saldo}' WHERE email = ${email}`) 
+}
+
+const getAllUser = async(role) => {
+    let result = await dbase.executeQueryWithParam(`select * from client where role = lower('${role}')`)
+    return result.length
 }
 
 const checkPassword = async(table, email, password) => {
@@ -35,8 +44,8 @@ const registerDeveloper = async(email, username, name, password) => {
     return await dbase.executeQueryWithParam(`insert into developer values(?,?,?,?)`,[email, username, name, password])
 }
 
-const registerUser = async(email, username, name, password, tanggal_lahir, no_telp, saldo) => {
-    return await dbase.executeQuery(`insert into client values('${email}','${username}','${name}','${password}','${tanggal_lahir}','${no_telp}','${saldo}')`)
+const registerUser = async(email, username, name, password, tanggal_lahir, no_telp, saldo, role) => {
+    return await dbase.executeQuery(`insert into client values('${email}','${username}','${name}','${password}','${tanggal_lahir}','${no_telp}','${saldo}', '${role}')`)
 }
 
 const cekDataEmail = async(email) =>{
@@ -53,7 +62,9 @@ const loginClient = async (email, password) =>{
 
 module.exports = {
     'checkBy' : checkBy,
-    'changePassDev' : changePassDev,
+    'updateData' : updateData,
+    'getAllUser' : getAllUser,
+    'changePass' : changePass,
     'checkPassword' : checkPassword,
     'findBy' : findBy,
     'getPassword' : getPassword,
