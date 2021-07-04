@@ -60,6 +60,13 @@ const loginClient = async (email, password) =>{
     return await dbase.executeQuery(`select * from client where email = '${email}' and password = '${password}'`)
 }
 
+const updateClient = async (email, username, name, no_telp) =>{
+    return await dbase.executeQuery(`update client set username=${username}, name=${name}, no_telp=${no_telp} where email=${email}`)
+}
+
+const updatePasswordClient = async (table, email, password) =>{
+    return await dbase.executeQueryWithParam(`UPDATE ${table} SET password=${password} WHERE email = ${email}`)
+}
 module.exports = {
     'checkBy' : checkBy,
     'updateData' : updateData,
@@ -74,7 +81,9 @@ module.exports = {
     'registerUser' : registerUser,
     'cekDataEmail' : cekDataEmail,
     'cekDataUsername' : cekDataUsername,
-    'loginClient' : loginClient
+    'loginClient' : loginClient,
+    'updateClient' : updateClient,
+    'updatePasswordClient': updatePasswordClient
 }
 
 // const checkBy = async(by, value) => {
