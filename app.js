@@ -136,6 +136,71 @@ app.post('/developer/login/changePassword', async(req, res) =>{
     
 })
 
+<<<<<<< HEAD
+
+
+app.post('/user/register', async (req,res)=>{
+    let errorResult = {}, email = req.body.email, username = req.body.username, name = req.body.name, password = req.body.password,
+    cpass = req.body.confirm_password, no_telp = req.body.no_telp,  role = req.body.role.toLowerCase();
+let saldo = 0;
+let temp = req.body.tanggal_lahir.split('/');
+let tanggal_lahir = temp[2]+"-"+temp[1]+"-"+temp[0];
+if (email.length < 1){
+    errorResult.email = 'Field tidak boleh kosong';
+    return res.status(400).send(errorResult);
+}else if (!await model.validateEmail(email)){
+    errorResult.email = 'Format Salah';
+    return res.status(400).send(errorResult);
+}else if(!await model.cekDataEmail(email)){
+    errorResult.email = 'Email Sudah Terdaftar';
+    return res.status(400).send(errorResult);
+}
+if(username.length < 1){
+    errorResult.username = 'Field tidak boleh kosong';
+    return res.status(400).send(errorResult);
+}
+else if(!await model.cekDataUsername(username)){
+    errorResult.email = 'Username Sudah terdaftar';
+    return res.status(400).send(errorResult);
+}
+if(name.length < 1){
+    errorResult.name = 'Field tidak boleh kosong';
+    return res.status(400).send(errorResult);
+}
+if (password.length < 1){
+    errorResult.password = 'Field tidak boleh kosong';
+    return res.status(400).send(errorResult);
+}
+if (cpass.length < 1){
+    errorResult.confirm_password = 'Field tidak boleh kosong';
+    return res.status(400).send(errorResult);
+}
+if (password != cpass){
+    errorResult.password = 'Password dan Confirm Password tidak sama';
+    return res.status(400).send(errorResult);
+}
+if (isNaN(no_telp)){
+    errorResult.no_telp = 'Input wajib angka';
+    return res.status(400).send(errorResult);
+}
+if (role != 'dokter' ||  role != 'client' || role != 'receptionist') {
+    errorResult.role = 'Role tidak sesuai';
+    return res.status(400).send(errorResult);
+}
+else{
+    console.log(role)
+    let saltRounds = 10, hashedPassword = bcrypt.hashSync(password, saltRounds)
+    try{
+        await model.registerUser(email, username, name, hashedPassword, tanggal_lahir, no_telp, saldo, role)
+        let result = {
+            "Email" : email,
+            "Username" : username,
+            "Name" : name,
+            "Tanggal Lahit" : tanggal_lahir,
+            "Nomor Telepon" : no_telp,
+            "Saldo " : "Rp "+saldo,
+            "Role" : role
+=======
 app.post('/user/register', async (req,res)=>{
     let errorResult = {}, email = req.body.email, username = req.body.username, name = req.body.name, password = req.body.password,
     cpass = req.body.confirm_password, no_telp = req.body.no_telp,  role = req.body.role.toLowerCase();
@@ -298,6 +363,7 @@ app.put('/client', async (req,res)=>{
         else{
             await model.updateClient(username, name, no_telp)
             return res.status(200).send(result)
+>>>>>>> ad2f25b56fee52423bfea67fbbe1ecd84720c3a9
         }
     }
 })
@@ -576,9 +642,12 @@ app.get(`/dokter`,async(req, res) =>{
         return res.status(200).send(result)
     }
 })
+<<<<<<< HEAD
+=======
 
 
 
+>>>>>>> ad2f25b56fee52423bfea67fbbe1ecd84720c3a9
 //put dokter/developer/client sama tinggal ubah dikit aq blm cek ini jadi gak langsung ta copas"
 app.put(`/receptionist`, async(req, res) =>{
     const token = req.header("x-auth-token");
