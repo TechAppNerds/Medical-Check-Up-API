@@ -231,6 +231,8 @@ app.post('/user/login', async (req,res)=>{
             let bcryptPass = await model.getPassword("client", "email", email)
             let user = await dbase.executeQuery(`select * from client where email = '${email}'`)
             let username = user[0].username;
+            let role = user[0].role;
+            let secret = "";
             if (!bcrypt.compareSync(password, bcryptPass)){
                 result = {
                     "Message" : "Password Salah"
@@ -240,7 +242,7 @@ app.post('/user/login', async (req,res)=>{
                 let token = jsonwebtoken.sign({
                     "email" : email,
                     "role" : "client"
-                }, process.env.secret, {'expiresIn':'30m'});
+                }, "user", {'expiresIn':'30m'});
                 result = {
                     "Email" : email,
                     "Username" : username,
@@ -415,6 +417,8 @@ app.post('/client/refresh', async (req, res)=>{
         let bcryptPass = await model.getPassword("client", "email", email)
         let user = await dbase.executeQuery(`select * from client where email = '${email}'`)
         let username = user[0].username;
+        let saldo = user[0].saldo;
+        let secret = user[0].role;
         if (!bcrypt.compareSync(password, bcryptPass)){
             result = {
                 "Message" : "Password Salah"
@@ -423,8 +427,10 @@ app.post('/client/refresh', async (req, res)=>{
         }else{
             let token = jsonwebtoken.sign({
                 "email" : email,
+                "username" : username,
+                "saldo" : saldo,
                 "role" : "client"
-            }, process.env.secret, {'expiresIn':'30m'});
+            }, "user", {'expiresIn':'30m'});
             result = {
                 "Email" : email,
                 "Username" : username,
@@ -464,23 +470,61 @@ app.delete('/client', async (req, res)=>{
 // cek data client yang sedang login
 app.get(`/client`,async(req, res) =>{
     const token = req.header("x-auth-token");
-    let user = {}, errorResult = {}
+    let user  = {};
     if(!token){
-        errorResult.token = "Unauthorized"
-        res.status(401).send("Unauthorized");
+        return res.status(401).send("unauthorized");
     }
     try{
-        user = jwt.verify(token, process.env.secret);
-    }catch(err){
-        errorResult.token = "token salah"
-        res.status(401).send("Token Invalid");
+        user = jsonwebtoken.verify(token, "user");
+    }catch (e) {
+        console.log(e);
     }
-    if(await model.findBy('developer', 'email', user.email)){
-        let result = await model.getAllUser('client')
-        return res.status(200).send(result)
+    let email = user.email;
+    let users = await dbase.executeQuery(`select * from client where email = '${email}'`);
+    let username = users[0].username;
+    let name = users[0].name;
+    let password = users[0].password;
+    let tanggal_lahir = users[0].tanggal_lahir;
+    let saldo = users[0].saldo;
+    let result = {
+        "Email" : email,
+        "Username" : username,
+        "Name" : name,
+        "Password" : password,
+        "Tanggal Lahir" : tanggal_lahir,
+        "Saldo" : saldo
     }
+    return res.status(200).send(result);
 })
 
+app.post('/client/topup', async (req, res)=>{
+    const token = req.header("x-auth-token");
+    let user = {}, result = {};
+    let temp = req.body.saldo;
+    if(!token){
+        res.status(400).send("Unauthorized");
+    }
+    try {
+        user = jsonwebtoken.verify(token, "user");
+    }catch (e) {
+        res.status(401).send("Unauthorized");
+    }
+    if (user.role != "client"){
+        return res.status(401).send("Role bukan client");
+    }
+    else {
+        let email = user.email;
+        let users = await dbase.executeQuery(`select * from client where email = '${email}'`);
+        let saldo_awal = users[0].saldo;
+        let saldo = parseInt(saldo_awal) + parseInt(temp);
+        result = {
+            "saldo_awal" : saldo_awal,
+            "Saldo_akhir" : saldo
+        }
+        let topup = await dbase.executeQuery(`update client set saldo = '${saldo}' where email = '${email}'`)
+        return res.status(200).send(result);
+    }
+})
 
 app.get(`/receptionist`,async(req, res) =>{
     const token = req.header("x-auth-token");
@@ -490,15 +534,28 @@ app.get(`/receptionist`,async(req, res) =>{
         res.status(401).send("Unauthorized");
     }
     try{
-        user = jwt.verify(token, process.env.secret);
+        user = jsonwebtoken.verify(token, "user");
     }catch(err){
         errorResult.token = "token salah"
         res.status(401).send("Token Invalid");
     }
-    if(await model.findBy('developer', 'email', user.email)){
-        let result = await model.getAllUser('receptionist')
-        return res.status(200).send(result)
+    let email = user.email;
+    let users = await dbase.executeQuery(`select * from client where email = '${email}'`);
+    let username = users[0].username;
+    let name = users[0].name;
+    let password = users[0].password;
+    let tanggal_lahir = users[0].tanggal_lahir;
+    let saldo = users[0].saldo;
+    let tgl = dateFormat(tanggal_lahir);
+    let result = {
+        "Email" : email,
+        "Username" : username,
+        "Name" : name,
+        "Password" : password,
+        "Tanggal Lahir" : tgl,
+        "Saldo" : saldo
     }
+    return res.status(200).send(result);
 })
 
 app.get(`/dokter`,async(req, res) =>{
@@ -564,3 +621,9 @@ app.put(`/receptionist`, async(req, res) =>{
 app.listen(port, () => {
     console.log(`Running to port ${port}`);
 });
+
+function dateFormat(dateTime) {
+    var date = new Date(dateTime.getTime());
+    date.setHours(0, 0, 0, 0);
+    return date;
+}
