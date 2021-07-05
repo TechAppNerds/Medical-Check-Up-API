@@ -123,20 +123,20 @@ module.exports = {
     updateDeveloper: async(username, name, email) => {
         return await dbase.executeQuery(`update developer set username = '${username}', name = '${name}'  where email = ${email}`)
     },
-    registerUser: async(email, username, name, password, tanggal_lahir, no_telp, saldo, role) => {
-        return await dbase.executeQuery(`insert into client values('${email}','${username}','${name}','${password}','${tanggal_lahir}','${no_telp}','${saldo}', '${role}')`)
+    registerUser: async(email, username, name, password, tanggal_lahir, no_telp, saldo, role, api_hit) => {
+        return await dbase.executeQuery(`insert into user_account values('${email}','${username}','${name}','${password}','${tanggal_lahir}','${no_telp}','${saldo}', '${role}', '${api_hit}')`)
     },
     cekDataEmail: async(email) =>{
-        return await dbase.executeQuery(`select * from client where email = '${email}'`);
+        return await dbase.executeQuery(`select * from user_account where email = '${email}'`);
     },
     cekDataUsername: async (username) =>{
-        return await dbase.executeQuery(`select * from client where username = '${username}'`);
+        return await dbase.executeQuery(`select * from user_account where username = '${username}'`);
     },
     loginClient: async (email, password) =>{
-        return await dbase.executeQuery(`select * from client where email = '${email}' and password = '${password}'`)
+        return await dbase.executeQuery(`select * from user_account where email = '${email}' and password = '${password}'`)
     },
     updateClient: async (email, username, name, no_telp) =>{
-        return await dbase.executeQuery(`update client set username=${username}, name=${name}, no_telp=${no_telp} where email=${email}`)
+        return await dbase.executeQuery(`update user_account set username=${username}, name=${name}, no_telp=${no_telp} where email=${email}`)
     },
     updatePasswordClient: async (table, email, password) =>{
         return await dbase.executeQueryWithParam(`UPDATE ${table} SET password=${password} WHERE email = ${email}`)
