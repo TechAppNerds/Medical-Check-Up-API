@@ -47,7 +47,11 @@ module.exports = {
         return await dbase.executeQuery(`update developer set username = '${username}', name = '${name}'  where email = ${email}`)
     },
     registerUser: async(email, username, name, password, tanggal_lahir, no_telp, saldo, role, api_hit) => {
+<<<<<<< HEAD
         return await dbase.executeQuery(`insert into user_account values('${email}','${username}','${name}','${password}','${tanggal_lahir}','${no_telp}',${saldo}, '${role}', ${api_hit})`)
+=======
+        return await dbase.executeQuery(`insert into user_account values('${email}','${username}','${name}','${password}','${tanggal_lahir}','${no_telp}','${saldo}', '${role}', '${api_hit}')`)
+>>>>>>> c68099c281d5fb93236d580d024d18f0fde83a74
     },
     cekDataEmail: async(email) =>{
         return await dbase.executeQuery(`select * from user_account where email = '${email}'`);

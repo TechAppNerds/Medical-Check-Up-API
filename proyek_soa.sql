@@ -1,11 +1,17 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.1
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
+<<<<<<< HEAD
 -- Generation Time: Jul 05, 2021 at 05:08 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.2
+=======
+-- Waktu pembuatan: 05 Jul 2021 pada 08.50
+-- Versi server: 10.4.6-MariaDB
+-- Versi PHP: 7.2.22
+>>>>>>> c68099c281d5fb93236d580d024d18f0fde83a74
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -27,6 +33,7 @@ USE `proyek_soa`;
 -- --------------------------------------------------------
 
 --
+<<<<<<< HEAD
 -- Table structure for table `activity`
 --
 
@@ -80,13 +87,37 @@ CREATE TABLE IF NOT EXISTS `consultation` (
 --
 
 INSERT INTO `consultation` (`id`, `email_user`, `name`, `doctor_name`, `info`) VALUES
+=======
+-- Struktur dari tabel `consul`
+--
+
+DROP TABLE IF EXISTS `consul`;
+CREATE TABLE IF NOT EXISTS `consul` (
+  `id_consul` int(50) NOT NULL AUTO_INCREMENT,
+  `email_user` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `doctor_name` varchar(255) NOT NULL,
+  `info` varchar(255) NOT NULL,
+  PRIMARY KEY (`id_consul`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `consul`
+--
+
+INSERT INTO `consul` (`id_consul`, `email_user`, `name`, `doctor_name`, `info`) VALUES
+>>>>>>> c68099c281d5fb93236d580d024d18f0fde83a74
 (1, 'yoyo@g.com', 'yoyo', 'temi', 'Check up bulanan'),
 (2, 'yoyo@g.com', 'yoyo', 'teddy', 'Suntik Vaksin');
 
 -- --------------------------------------------------------
 
 --
+<<<<<<< HEAD
 -- Table structure for table `developer_account`
+=======
+-- Struktur dari tabel `developer_account`
+>>>>>>> c68099c281d5fb93236d580d024d18f0fde83a74
 --
 
 DROP TABLE IF EXISTS `developer_account`;
@@ -104,7 +135,7 @@ CREATE TABLE IF NOT EXISTS `developer_account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `developer_account`
+-- Dumping data untuk tabel `developer_account`
 --
 
 INSERT INTO `developer_account` (`email`, `username`, `name`, `profile_photo`, `password`, `api_key`, `api_hit`, `account_type`) VALUES
@@ -114,6 +145,7 @@ INSERT INTO `developer_account` (`email`, `username`, `name`, `profile_photo`, `
 -- --------------------------------------------------------
 
 --
+<<<<<<< HEAD
 -- Table structure for table `dokter_schedule`
 --
 
@@ -177,6 +209,9 @@ CREATE TABLE IF NOT EXISTS `temperature` (
 
 --
 -- Table structure for table `user_account`
+=======
+-- Struktur dari tabel `user_account`
+>>>>>>> c68099c281d5fb93236d580d024d18f0fde83a74
 --
 
 DROP TABLE IF EXISTS `user_account`;
@@ -194,7 +229,7 @@ CREATE TABLE IF NOT EXISTS `user_account` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `user_account`
+-- Dumping data untuk tabel `user_account`
 --
 
 INSERT INTO `user_account` (`email`, `username`, `name`, `password`, `tanggal_lahir`, `no_telp`, `saldo`, `role`, `api_hit`) VALUES
@@ -204,6 +239,7 @@ INSERT INTO `user_account` (`email`, `username`, `name`, `password`, `tanggal_la
 ('teddy@g.com', 'teddy', 'teddy', '$2a$10$oN0hVCmULCOoBta5gOtAL.1LwC2YObqdNg7NnVxI8XnpCTPT1fjtW', '1992-08-30', '33521', 0, 'dokter', 0),
 ('temi@g.com', 'temi', 'temi', '$2a$10$ZS5oMCMHDOH8TqAg6y/JeOGZ8q0f4NnYn16DCL0/en0wTXgukG0FW', '1990-01-08', '99881', 0, 'dokter', 0),
 ('yoyo@g.com', 'yoyo', 'yoyo', '$2a$10$UhOEN3n4NDjaNOwiHF3Bk.S1bGdG4OKotC4Fph7xMxxIgTwDikyaa', '1998-08-09', '5645652', 4900, 'client', 3);
+<<<<<<< HEAD
 
 -- --------------------------------------------------------
 
@@ -236,6 +272,8 @@ ALTER TABLE `consultation`
 --
 ALTER TABLE `dokter_schedule`
   ADD CONSTRAINT `dokter_schedule_ibfk_1` FOREIGN KEY (`email_user`) REFERENCES `user_account` (`email`);
+=======
+>>>>>>> c68099c281d5fb93236d580d024d18f0fde83a74
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

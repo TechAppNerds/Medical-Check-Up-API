@@ -329,5 +329,9 @@ Method:GET; URL:/client/consultation; Status:200; Message: OK; DateTime: 05/07/2
 Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 470 ms
 Method:GET; URL:/client/consultation; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 27 ms
 Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 541 ms
+<<<<<<< HEAD
 Method:GET; URL:/client/consultation; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 47 msMethod:GET; URL:/login/priaid; Status:undefined; Message: undefined; DateTime: 05/07/2021; ResponseTime: NaN ms
 Method:GET; URL:/login/priaid; Status:undefined; Message: undefined; DateTime: 05/07/2021; ResponseTime: NaN ms
+=======
+Method:GET; URL:/client/consultation; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 47 ms
+>>>>>>> c68099c281d5fb93236d580d024d18f0fde83a74
