@@ -209,6 +209,11 @@
 									"key": "new_password",
 									"value": "",
 									"type": "text"
+								},
+								{
+									"key": "confirm_password",
+									"value": "",
+									"type": "text"
 								}
 							]
 						},
@@ -747,6 +752,51 @@
 											"path": [
 												"client",
 												"transaction"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Subcription",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "saldo",
+													"value": "",
+													"type": "text"
+												},
+												{
+													"key": "confirm_password",
+													"value": "",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "localhost:3000/client/subscription",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"subscription"
 											]
 										}
 									},
@@ -2133,6 +2183,31 @@
 		{
 			"name": "Priaid Health Service",
 			"item": [
+				{
+					"name": "Auth PriaId",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/login/priaid",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"login",
+								"priaid"
+							]
+						}
+					},
+					"response": []
+				},
 				{
 					"name": "List of Symptoms",
 					"request": {

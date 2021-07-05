@@ -18,6 +18,7 @@
     "ejs": "^3.1.6",
     "express": "^4.17.1",
     "generate-api-key": "^1.0.0",
+    "heroku": "^7.56.0",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",

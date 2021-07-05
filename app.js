@@ -8,17 +8,10 @@ const fs = require('fs');
 const morgan = require('morgan');
 const multer = require('multer');
 const dbase = require("./connection");
-const request = require('request');
 app.use(express.urlencoded({extended : false}));
 const bcrypt = require('bcryptjs');
 const jsonwebtoken = require('jsonwebtoken');
-// const createError = require('http-errors');
-// app.use(async (req, res, next) => {
-//     next(createError.NotFound())
-// });
-// const PORT = process.env.PORT || 8080;
 require('dotenv').config();
-// const logged_in_user = {};
 
 app.use(morgan((tokens, req, res) => {
     return [`Method:${tokens.method(req, res)}; URL:${tokens.url(req, res)}; Status:${tokens.status(req, res)}; Message: ${res.statusMessage}; DateTime: ${(new Date().getDate() < 10 ? "0" : "") + new Date().getDate() + '/' + ((new Date().getMonth() + 1 < 10 ? "0" : "") + (new Date().getMonth() + 1)) + '/' + new Date().getFullYear()}; ResponseTime: ${Math.floor(tokens['response-time'](req, res))} ms`].join(' ')
@@ -30,8 +23,6 @@ const dir = './images', storage = multer.diskStorage({
     },
     filename:async function(req,file,callback){
         const extension = file.originalname.split('.')[file.originalname.split('.').length-1];
-        // let dataTugas = await model.findTaskBy(req.body.kode_tugas), username = await model.findUsername(req.body.username)
-        // const filename = dataTugas.kode_tugas + "_" + username;
         const filename = req.developer.username;
         isFileExist(filename)
         callback(null,(filename+'.'+extension));
@@ -39,7 +30,6 @@ const dir = './images', storage = multer.diskStorage({
 });
 
 function checkFileType(file,cb) {
-    // const filetypes= /zip|rar/;
     const filetypes= /jpeg|jpg|png|gif/;
     const extname=filetypes.test(file.originalname.split('.')[file.originalname.split('.').length-1]);
     const mimetype=filetypes.test(file.mimetype);
@@ -119,7 +109,7 @@ app.post("/developer/register", async(req, res) => {
         try {
             if (await model.registerDeveloper(input.email, input.username, input.name, hashedPassword)) {
                 res.status(201).json({
-                    message:`${input.username} berhasil register`,
+                    message:`Developer ${input.username} berhasil register`,
                 })
                 // res.render('login', {
                 //     message:`${input.username} berhasil register`,
@@ -154,7 +144,7 @@ app.post('/developer/login', async(req, res) => {
         // })
     } else {
         res.status(200).json({
-            message: `${await model.getUsername("developer_account", "email", input.email)} berhasil register`,
+            message: `Developer ${await model.getUsername("developer_account", "email", input.email)} berhasil login`,
             token: jsonwebtoken.sign({email: input.email,}, process.env.SECRET_KEY, {expiresIn: "10m"}),
         })
         // res.render('index', {
@@ -187,28 +177,14 @@ app.get('/developer/', verifyAuthToken, async(req, res) => {
 app.post('/developer/photo', verifyAuthToken, upload.single("photo"), async(req, res) => {
     if (!req.file) {
         return res.status(400).json({
-            message: "Profile Photo tidak boleh kosong",
+            error: "Profile Photo tidak boleh kosong",
         })
     }
     try {
-        // if (await model.fileTaskExist(dataTugas.kode_tugas, req.file.filename.split(".")[0], username) > 0) {
-        //     let id = await model.idTaskExist(dataTugas.kode_tugas, req.file.filename.split(".")[0], username)
-        //     if (await model.deleteTaskExist(id) && await model.turnInTask(dataTugas.kode_tugas, req.file.filename, username)) {
-        //         return res.status(200).json({
-        //             message: "Berhasil mengumpulkan tugas",
-        //         })
-        //     }
-        // } else {
-        //     if (await model.turnInTask(dataTugas.kode_tugas, req.file.filename, username)) {
-        //         return res.status(201).json({
-        //             message: "Berhasil mengumpulkan tugas",
-        //         })
-        //     }
-        // }
         if (await model.uploadPhoto(req.file.filename, req.developer.email)) {
             let username = await model.getUsername("developer_account", "email", req.developer.email);
             return res.status(200).json({
-                message:`${username} Berhasil Upload Profile Photo`,
+                message:`Developer ${username} Berhasil Upload Profile Photo`,
             })
         }
     } catch (error) {
@@ -241,6 +217,7 @@ app.put('/developer/', verifyAuthToken, async(req, res) => {
                     old_name: old_data[0].name,
                     new_username: input.username,
                     new_name: input.name,
+                    message: `Update Account Profile Berhasil`,
                 })
             }
         } catch (error) {
@@ -250,38 +227,17 @@ app.put('/developer/', verifyAuthToken, async(req, res) => {
 })
 
 app.put('/developer/changePassword', verifyAuthToken, async(req, res) => {
-    //belum tak cek soale gtw respond kemana tapi haruse bisa aq dah buatin model buat change password jga
-    // const token = req.header("x-auth-token");
-    // let user = {}
-    // let input = req.body, errorResult = {}
-    // if(!token){
-    //     errorResult.token = `token belum ada`
-    // }
-    // try{
-    //     user = jsonwebtoken.verify(token,process.env.SECRET_KEY);
-    // }catch(err){
-    //     errorResult.token = `token invalid`
-    // }
-
-    // if (input.password.length < 1) {
-    //     errorResult.password = `field password tidak boleh kosong`
-    // } else if (input.confirmPass.length < 1) {
-    //     errorResult.confirmPass = `field confirmation tidak boleh kosong`
-    // } else if (input.password == input.confirmPass) {
-    //     let saltRounds = 10, hashedPassword = bcrypt.hashSync(input.password, saltRounds)
-    //     if (await model.changePassDev(user.email, hashedPassword)) {
-    //         //aku gak tahu mau respond kemana ini tinggal respond render
-    //         res.render('changePassword', {
-    //             message:`${input.username} Ubah password berhasil`,
-    //         })
-    //     }
-    // }else{
-    //     errorResult.confirmPass = `password dan confirmation password tidak sama`
-    // }
-
     if (req.body.new_password.length < 1) {
         res.status(400).json({
             error: `Field New Password tidak boleh kosong`
+        })
+    } else if (req.body.confirm_password.length < 1) {
+        res.status(400).json({
+            error: `Field Confirm Password tidak boleh kosong`
+        })
+    } else if (req.body.new_password != req.body.confirm_password) {
+        res.status(400).json({
+            error: `Field New Password dan Confirm Password tidak sama`
         })
     }
     try {
@@ -289,7 +245,7 @@ app.put('/developer/changePassword', verifyAuthToken, async(req, res) => {
         if (await model.changePass('developer_account', hashedPassword, req.developer.email)) {
             let username = await model.getUsername("developer_account", "email", req.developer.email);
             res.status(200).json({
-                message:`${username} Ganti Password Berhasil`,
+                message: `Developer ${username} Ganti Password Berhasil`,
             })
         }
     } catch (error) {
@@ -298,681 +254,547 @@ app.put('/developer/changePassword', verifyAuthToken, async(req, res) => {
 })
 
 app.post('/user/register', verifyAuthToken, async(req,res)=>{
-    // let errorResult = {}, email = req.body.email, username = req.body.username, name = req.body.name, password = req.body.password,
-    // cpass = req.body.confirm_password, no_telp = req.body.no_telp,  role = req.body.role.toLowerCase();
-    // let saldo = 0;
-    // let temp = req.body.tanggal_lahir.split('/');
-    // let tanggal_lahir = temp[2]+"-"+temp[1]+"-"+temp[0];
-    // if (email.length < 1){
-    //     errorResult.email = 'Field tidak boleh kosong';
-    //     return res.status(400).send(errorResult);
-    // }else if (!await model.validateEmail(email)){
-    //     errorResult.email = 'Format Salah';
-    //     return res.status(400).send(errorResult);
-    // }else if(!await model.cekDataEmail(email)){
-    //     errorResult.email = 'Email Sudah Terdaftar';
-    //     return res.status(400).send(errorResult);
-    // }
-    // if(username.length < 1){
-    //     errorResult.username = 'Field tidak boleh kosong';
-    //     return res.status(400).send(errorResult);
-    // }
-    // else if(!await model.cekDataUsername(username)){
-    //     errorResult.email = 'Username Sudah terdaftar';
-    //     return res.status(400).send(errorResult);
-    // }
-    // if(name.length < 1){
-    //     errorResult.name = 'Field tidak boleh kosong';
-    //     return res.status(400).send(errorResult);
-    // }
-    // if (password.length < 1){
-    //     errorResult.password = 'Field tidak boleh kosong';
-    //     return res.status(400).send(errorResult);
-    // }
-    // if (cpass.length < 1){
-    //     errorResult.confirm_password = 'Field tidak boleh kosong';
-    //     return res.status(400).send(errorResult);
-    // }
-    // if (password != cpass){
-    //     errorResult.password = 'Password dan Confirm Password tidak sama';
-    //     return res.status(400).send(errorResult);
-    // }
-    // if (isNaN(no_telp)){
-    //     errorResult.no_telp = 'Input wajib angka';
-    //     return res.status(400).send(errorResult);
-    // }
-    // if (role == 'dokter' ||  role == 'client' || role == 'receptionist') {
-    //     console.log(role)
-    //     let saltRounds = 10, hashedPassword = bcrypt.hashSync(password, saltRounds)
-    //     try{
-    //         await model.registerUser(email, username, name, hashedPassword, tanggal_lahir, no_telp, saldo, role)
-    //         let result = {
-    //             "Email" : email,
-    //             "Username" : username,
-    //             "Name" : name,
-    //             "Tanggal Lahit" : tanggal_lahir,
-    //             "Nomor Telepon" : no_telp,
-    //             "Saldo " : "Rp "+saldo,
-    //             "Role" : role
-    //         }
-    //         return res.status(201).send(result);
-    //     }catch (ex) {
-    //         console.log(ex);
-    //     }
-    // }
-    // else{
-    //     errorResult.role = 'Role tidak sesuai';
-    //     return res.status(400).send(errorResult);
-    // }
-    let input = req.body, errorResult = {}
-    if (input.email.length < 1) {
-        errorResult.email = `field email tidak boleh kosong`
-    } else if (await model.checkBy("developer_account", "email", input.email) > 0) {
-        errorResult.email = `email ${input.email} telah terdaftar pada sistem`
-    } else if (!await model.validateEmail(input.email)) {
-        errorResult.email = `email ${input.email} tidak valid`
+    let errorResult = {}, email = req.body.email, username = req.body.username, name = req.body.name, password = req.body.password, cpass = req.body.confirm_password, no_telp = req.body.no_telp, role = req.body.role.toLowerCase(), saldo = 0, api_hit = 0, temp = req.body.tanggal_lahir.split('/'), tanggal_lahir = `${temp[2]}-${temp[1]}-${temp[0]}`;
+    if (email.length < 1){
+        errorResult.email = 'Field tidak boleh kosong';
+    }else if (!await model.validateEmail(email)){
+        errorResult.email = 'Format Salah';
+    }else if(!await model.cekDataEmail(email)){
+        errorResult.email = 'Email Sudah Terdaftar';
     }
-    if (input.username.length < 1) {
-        errorResult.username = `field username tidak boleh kosong`
-    } else if (await model.checkBy("developer_account", "username", input.username) > 0) {
-        errorResult.username = `username ${input.username} telah terdaftar pada sistem`
-    } else if (!await model.validateUsername(input.username)) {
-        errorResult.username = `username ${input.username} tidak valid`
+    if(username.length < 1){
+        errorResult.username = 'Field tidak boleh kosong';
     }
-    if (input.name.length < 1) {
-        errorResult.name = `field name tidak boleh kosong`
+    else if(!await model.cekDataUsername(username)){
+        errorResult.email = 'Username Sudah terdaftar';
     }
-    if (input.password.length < 1) {
-        errorResult.password = `field password tidak boleh kosong`
+    if(name.length < 1){
+        errorResult.name = 'Field tidak boleh kosong';
     }
-    if (input.tanggal_lahir.length < 1) {
-        errorResult.name = `field tanggal lahir tidak boleh kosong`
-    } else {
-        
+    if (password.length < 1){
+        errorResult.password = 'Field tidak boleh kosong';
     }
-    if (input.no_telp.length < 1) {
-        errorResult.password = `field nomor telepon tidak boleh kosong`
+    if (cpass.length < 1){
+        errorResult.confirm_password = 'Field tidak boleh kosong';
     }
-    if (input.saldo.length < 1) {
-        errorResult.name = `field saldo tidak boleh kosong`
+    if (password != cpass){
+        errorResult.password = 'Password dan Confirm Password tidak sama';
     }
-    if (input.role.length < 1) {
-        errorResult.password = `field role tidak boleh kosong`
+    if (isNaN(no_telp)){
+        errorResult.no_telp = 'Input wajib angka';
+    }
+    if (role != 'dokter' &&  role != 'client' && role != 'receptionist') {
+        errorResult.role = 'Role User tidak sesuai';
     }
     if (!(Object.entries(errorResult).length === 0)) {
         res.status(400).json({
             listError: errorResult,
         })
     } else {
-        let saltRounds = 10, hashedPassword = bcrypt.hashSync(input.password, saltRounds)
-        try {
-            if (await model.registerDeveloper(input.email, input.username, input.name, hashedPassword)) {
-                res.status(201).json({
-                    message:`${input.username} berhasil register`,
-                })
-                // res.render('login', {
-                //     message:`${input.username} berhasil register`,
-                // })
-            }
-        } catch (error) {
-            console.log(error)
+        let saltRounds = 10, hashedPassword = bcrypt.hashSync(password, saltRounds)
+        try{
+            await model.registerUser(email, username, name, hashedPassword, tanggal_lahir, no_telp, saldo, role, api_hit)
+            return res.status(201).send({
+                "Email" : email,
+                "Username" : username,
+                "Name" : name,
+                "Tanggal Lahir" : tanggal_lahir,
+                "Nomor Telepon" : no_telp,
+                "Saldo " : `Rp ${saldo}`,
+                "Role" : role,
+                "Api_hit" : api_hit,
+                message:`User ${username} berhasil register`,
+            });
+        }catch (ex) {
+            console.log(ex);
         }
     }
 })
 
-//client login
-app.post('/user/login', verifyAuthToken, async(req,res)=>{
-    let result = {};
-    let email = req.body.email;
-    let password = req.body.password;
-    if (email.length < 1){
-        result = {
-            "Message" : "Email wajib diisi"
+
+app.post('/user/login', verifyAuthToken, async(req,res,next)=>{
+    let input = req.body, errorResult = {}
+    if (input.email.length < 1 || input.password.length < 1) {
+        if (input.email.length < 1) errorResult.email = `field email tidak boleh kosong`
+        if (input.password.length < 1) errorResult.password = `field password tidak boleh kosong`
+    } else {
+        if (await model.checkBy("user_account", "email", input.email) <= 0) 
+            errorResult.email = `email user tidak terdaftar`
+        else {
+            let devPassword = await model.getPassword("user_account", "email", input.email)
+            if (!bcrypt.compareSync(input.password, devPassword)) 
+                errorResult.password = `password user tidak sesuai`
         }
-        return res.status(400).send(result)
-    }else if(!await model.cekDataEmail(email)){
-        result = {
-            "Message" : "Email tidak terdaftar"
-        }
-        return res.status(400).send(result);
     }
-    if (password.length < 1){
-        result = {
-            "Message" : "Password wajib diisi"
-        }
-        return res.status(400).send(result)
-    }
-    else{
-        try {
-            let bcryptPass = await model.getPassword("client", "email", email)
-            let user = await dbase.executeQuery(`select * from client where email = '${email}'`)
-            let username = user[0].username;
-            let role = user[0].role;
-            let secret = "";
-            if (!bcrypt.compareSync(password, bcryptPass)){
-                result = {
-                    "Message" : "Password Salah"
-                }
-                return res.status(400).send(result);
-            }else{
-                let token = jsonwebtoken.sign({
-                    "email" : email,
-                    "role" : "client"
-                }, "user", {'expiresIn':'30m'});
-                result = {
-                    "Email" : email,
-                    "Username" : username,
-                    "Token" : token
-                }
-                return res.status(200).send(result);
-            }
-        }catch (e) {
-            console.log(e);
-        }
+    if (!(Object.entries(errorResult).length === 0)) {
+        res.status(400).json({
+            listError: errorResult,
+        })
+    } else {
+        let data = await model.findBy("user_account", "email", input.email)
+        res.status(200).json({
+            message: `User ${data[0].username} berhasil register`,
+            token: jsonwebtoken.sign({email: input.email, role: data[0].role}, `${process.env.USER_SECRET_KEY}`, {expiresIn: "10m"}),
+        })
     }
 })
 
 function verifyUserAccessToken(req, res, next) {
-    if (!req.headers["x-auth-token"]) {
-        return res.status(401).json({error: "Token Authentication Not Found"});
+    if (!req.headers["user-access-token"]) {
+        return res.status(401).json({error: "User Token Access Not Found"});
     }
-    let developer = {};
+    let user = {};
     try {
-        developer = jsonwebtoken.verify(req.headers["x-auth-token"], process.env.SECRET_KEY);
+        user = jsonwebtoken.verify(req.headers["user-access-token"], `${process.env.USER_SECRET_KEY}`);
     } catch (error) {
-        return res.status(401).json({error: "Invalid Token Authentication"});
+        return res.status(401).json({error: "Invalid User Token Access"});
     }
-    req.developer = developer;
+    req.user = user;
     next();
 }
 
-//update data client
-app.put('/client', async (req,res)=>{
-    const token = req.header("x-auth-token");
-    let email = req.body.email, username = req.body.username_baru, name = req.body.name_baru, password = req.body.password,
-        no_telp = req.body.no_telp_baru;
-    if (email.length < 1){
-        errorResult.email = 'Field tidak boleh kosong';
-        return res.status(400).send(errorResult);
+function UserIsClient(req, res) {
+    if (req.user.role != "client") {
+        return res.status(403).json({error: "Role User Bukan Client"});
     }
-    if(!await model.cekDataEmail(email)){
-        if (password.length < 1){
-            errorResult.password = 'Field tidak boleh kosong';
-            return res.status(400).send(errorResult);
-        }
-        if(username.length < 1){
-            errorResult.username = 'Field tidak boleh kosong';
-            return res.status(400).send(errorResult);
-        }
-        if(!await model.cekDataUsername(username)){
-            errorResult.email = 'Username Sudah terdaftar';
-            return res.status(400).send(errorResult);
-        }
-        if(name.length < 1){
-            errorResult.name = 'Field tidak boleh kosong';
-            return res.status(400).send(errorResult);
-        }
-        if (isNaN(no_telp)){
-            errorResult.no_telp = 'Input wajib angka';
-            return res.status(400).send(errorResult);
-        }
-        let bcryptPass = await model.getPassword("client", "email", email)
-        let user = await dbase.executeQuery(`select * from client where email = '${email}'`)
-        let username = user[0].username;
-        if (!bcrypt.compareSync(password, bcryptPass)){
-            result = {
-                "Message" : "Password Salah"
-            }
-            return res.status(400).send(result);
-        }
-        else{
-            await model.updateClient(username, name, no_telp)
-            return res.status(200).send(result)
-        }
+}
+
+function UserIsDokter(req, res) {
+    if (req.user.role != "dokter") {
+        return res.status(403).json({error: "Role User Bukan Dokter"});
     }
+}
+
+function UserIsReceptionist(req, res) {
+    if (req.user.role != "receptionist") {
+        return res.status(403).json({error: "Role User Bukan Receptionist"});
+    }
+}
+
+app.get('/client/', [verifyAuthToken, verifyUserAccessToken, UserIsClient], async(req, res) => {
+    let data = await model.findBy("user_account", "email", req.user.email);
+    delete data[0].password;
+    return res.status(200).json(data);
 })
 
-//change password client
-app.put('/client/changePassword', async (req, res) =>{
-    let result = {};
-    let email = req.body.email;
-    let password_baru = req.body.password_baru;
-    let cpass = req.body.confirm_password;
-    let password = req.body.password;
-    if (email.length < 1){
-        result = {
-            "Message" : "Email Harus Diisi"
-        }
-        return res.status(401).send(result);
+app.put('/client/', [verifyAuthToken, verifyUserAccessToken, UserIsClient], async (req,res)=>{
+    let username = req.body.username_baru, name = req.body.name_baru, no_telp = req.body.no_telp_baru;
+    if (username.length < 1){
+        errorResult.username = 'Field Username tidak boleh kosong';
+    } else if (await model.checkBy("user_account", "username", username) > 0) {
+        errorResult.username = `username ${username} telah terdaftar pada sistem`
+    } else if (!await model.validateUsername(username)) {
+        errorResult.username = `username ${username} tidak valid`
     }
-    if (password.length < 1){
-        result = {
-            "Message" : "Password Harus Diisi"
-        }
-        return res.status(401).send(result);
+    if (name.length < 1){
+        errorResult.name = 'Field Name tidak boleh kosong';
     }
-    if (password_baru.length < 1){
-        result = {
-            "Message" : "Password Baru Harus Diisi"
-        }
-        return res.status(401).send(result);
+    if (isNaN(no_telp)){
+        errorResult.no_telp = 'Input Nomor Telepon wajib angka';
     }
-    if (cpass.length < 1){
-        result = {
-            "Message" : "Confrim Password Harus Diisi"
-        }
-        return res.status(401).send(result);
-    }
-    if (!await model.cekDataEmail(email)){
-        result = {
-            "Message" : "Akun tidak terdadftar"
-        }
-        return res.status(401).send(result);
-    }
-    else{
-        if (password_baru != cpass){
-            result = {
-                "Message" : "Password dan Confirm Password harus sama"
-            }
-            return res.status(401).send(result);
-        }
+    if (!(Object.entries(errorResult).length === 0)) {
+        res.status(400).json({
+            listError: errorResult,
+        })
+    } else {
         try {
-            let bcryptPass = await model.getPassword("client", "email", email)
-            if (!bcrypt.compareSync(password, bcryptPass)){
-                result = {
-                    "Message" : "Password Salah"
-                }
-                return res.status(400).send(result);
-            }else{
-                let saltRounds = 10, hashedPassword = bcrypt.hashSync(password_baru, saltRounds)
-                let users = await dbase.executeQuery(`update client set password = '${hashedPassword}' where email = '${email}'`);
-                result = {
-                    "message" : "sukses"
-                }
-                return res.status(200).send(result);
-            }
-        }catch (e) {
-            console.log(e);
-        }
-    }
-
-    let cek = await dbase.executeQuery(`select * from client where email = ${email} and password = ${password}`);
-    if (cek.length == 0){
-        let result = {
-            "Message" : "Password salah"
-        }
-        return res.status(401).send(result)
-    }
-    else {
-        let bcryptPass = await model.getPassword("client", "email", email)
-        let user = await dbase.executeQuery(`select * from client where email = '${email}'`)
-        let username = user[0].username;
-        if (!bcrypt.compareSync(password, bcryptPass)){
-            result = {
-                "Message" : "Password Salah"
-            }
-            return res.status(400).send(result);
-        }else{
-            let saltRounds = 10, hashedPassword = bcrypt.hashSync(password_baru, saltRounds)
-            let client = await dbase.executeQuery(`update client set password=${hashedPassword} where email=${email}`);
-            let result = {
-                "Message" : "Change Password Success"
-            }
-            return res.status(200).send(result);
+            await model.updateClient(req.user.email, username, name, no_telp)
+            return res.status(200).json({message: `User ${username} Update Profile Berhasil`})
+        } catch (error) {
+            return res.status(500).json({error: "Update Profile Gagal"});
         }
     }
 })
 
-// get token baru user yg sedang login
-app.post('/client/refresh', async (req, res)=>{
-    let token = req.header("x-auth-token");
-    let email = req.body.email;
-    let password = req.body.password;
-    if (email.length < 1){
-        result = {
-            "Message" : "Email wajib diisi"
-        }
-        return res.status(400).send(result)
-    }else if(!await model.cekDataEmail(email)){
-        result = {
-            "Message" : "Email tidak terdaftar"
-        }
-        return res.status(400).send(result);
-    }
-    if (password.length < 1){
-        result = {
-            "Message" : "Password wajib diisi"
-        }
-        return res.status(400).send()
-    }
-    try{
-        let bcryptPass = await model.getPassword("client", "email", email)
-        let user = await dbase.executeQuery(`select * from client where email = '${email}'`)
-        let username = user[0].username;
-        let saldo = user[0].saldo;
-        let secret = user[0].role;
-        if (!bcrypt.compareSync(password, bcryptPass)){
-            result = {
-                "Message" : "Password Salah"
-            }
-            return res.status(400).send(result);
-        }else{
-            let token = jsonwebtoken.sign({
-                "email" : email,
-                "username" : username,
-                "saldo" : saldo,
-                "role" : "client"
-            }, "user", {'expiresIn':'30m'});
-            result = {
-                "Email" : email,
-                "Username" : username,
-                "Token Baru" : token
-            }
-            return res.status(200).send(result);
-        }
-    }catch (e) {
-        console.log(e);
-    }
-})
 
-//delete client account yg sedang login
-app.delete('/client', async (req, res)=>{
-    let email = req.body.email;
-    let password = req.body.password;
-    let result = {};
-    try{
-        let bcryptPass = await model.getPassword("client", "email", email)
-        let user = await dbase.executeQuery(`select * from client where email = '${email}'`)
-        let username = user[0].username;
-        if (!bcrypt.compareSync(password, bcryptPass)){
-            result = {
-                "Message" : "Password Salah"
-            }
-            return res.status(400).send(result);
-        }else{
-            let users = await dbase.executeQuery(`delete from client where email = '${email}'`);
-            result = {
-                "Message" : "Delete Account Success"
-            }
-            return res.status(200).send(result);
-        }
-    }catch (e) {
-        console.log(e);
-    }
-})
-
-// cek data client yang sedang login
-app.get(`/client`,async(req, res) =>{
-    const token = req.header("x-auth-token");
-    let user  = {};
-    if(!token){
-        return res.status(401).send("unauthorized");
-    }
-    try{
-        user = jsonwebtoken.verify(token, "user");
-    }catch (e) {
-        console.log(e);
-    }
-    let email = user.email;
-    let users = await dbase.executeQuery(`select * from client where email = '${email}'`);
-    let username = users[0].username;
-    let name = users[0].name;
-    let password = users[0].password;
-    let tanggal_lahir = users[0].tanggal_lahir;
-    let saldo = users[0].saldo;
-    let result = {
-        "Email" : email,
-        "Username" : username,
-        "Name" : name,
-        "Password" : password,
-        "Tanggal Lahir" : tanggal_lahir,
-        "Saldo" : saldo
-    }
-    return res.status(200).send(result);
-})
-
-app.post('/client/topup', async (req, res)=>{
-    const token = req.header("x-auth-token");
-    let user = {}, result = {};
-    let temp = req.body.saldo;
-    if(!token){
-        res.status(400).send("Unauthorized");
+app.put('/client/changePassword', [verifyAuthToken, verifyUserAccessToken, UserIsClient], async (req, res) =>{
+    if (req.body.new_password.length < 1) {
+        res.status(400).json({
+            error: `Field New Password tidak boleh kosong`
+        })
+    } else if (req.body.confirm_password.length < 1) {
+        res.status(400).json({
+            error: `Field Confirm Password tidak boleh kosong`
+        })
+    } else if (req.body.new_password != req.body.confirm_password) {
+        res.status(400).json({
+            error: `Field New Password dan Confirm Password tidak sama`
+        })
     }
     try {
-        user = jsonwebtoken.verify(token, "user");
-    }catch (e) {
-        res.status(401).send("Unauthorized");
-    }
-    if (user.role != "client"){
-        return res.status(401).send("Role bukan client");
-    }
-    else {
-        let email = user.email;
-        let users = await dbase.executeQuery(`select * from client where email = '${email}'`);
-        let saldo_awal = users[0].saldo;
-        let saldo = parseInt(saldo_awal) + parseInt(temp);
-        result = {
-            "saldo_awal" : saldo_awal,
-            "Saldo_akhir" : saldo
+        let saltRounds = 10, hashedPassword = bcrypt.hashSync(req.body.new_password, saltRounds)
+        if (await model.changePass('user_account', hashedPassword, req.user.email)) {
+            let username = await model.getUsername("user_account", "email", req.user.email);
+            res.status(200).json({
+                message: `User ${username} Ganti Password Berhasil`,
+            })
         }
-        let topup = await dbase.executeQuery(`update client set saldo = '${saldo}' where email = '${email}'`)
-        return res.status(200).send(result);
+    } catch (error) {
+        return res.status(500).json({error: "Ganti Password Gagal"});
     }
 })
 
-app.get(`/receptionist`,async(req, res) =>{
-    const token = req.header("x-auth-token");
-    let user = {}, errorResult = {}
-    if(!token){
-        errorResult.token = "Unauthorized"
-        res.status(401).send("Unauthorized");
-    }
-    try{
-        user = jsonwebtoken.verify(token, "user");
-    }catch(err){
-        errorResult.token = "token salah"
-        res.status(401).send("Token Invalid");
-    }
-    let email = user.email;
-    let users = await dbase.executeQuery(`select * from client where email = '${email}'`);
-    let username = users[0].username;
-    let name = users[0].name;
-    let password = users[0].password;
-    let tanggal_lahir = users[0].tanggal_lahir;
-    let saldo = users[0].saldo;
-    let tgl = dateFormat(tanggal_lahir);
-    let result = {
-        "Email" : email,
-        "Username" : username,
-        "Name" : name,
-        "Password" : password,
-        "Tanggal Lahir" : tgl,
-        "Saldo" : saldo
-    }
-    return res.status(200).send(result);
-})
-
-app.get(`/dokter`,async(req, res) =>{
-    const token = req.header("x-auth-token");
-    let user = {}, errorResult = {}
-    if(!token){
-        errorResult.token = "Unauthorized"
-        res.status(401).send("Unauthorized");
-    }
-    try{
-        user = jwt.verify(token, process.env.SECRET_KEY);
-    }catch(err){
-        errorResult.token = "token salah"
-        res.status(401).send("Token Invalid");
-    }
-    if(await model.findBy('developer_account', 'email', user.email)){
-        let result = await model.getAllUser('dokter')
-        return res.status(200).send(result)
+app.post('/client/refresh', [verifyAuthToken, verifyUserAccessToken, UserIsClient], async (req, res)=>{
+    try {
+        let data = await model.findBy("user_account", "email", req.user.email)
+        res.status(200).json({
+            message: `User ${data[0].username} berhasil refresh token`,
+            new_token: jsonwebtoken.sign({email: req.user.email, role: req.user.role}, `${process.env.USER_SECRET_KEY}`, {expiresIn: "10m"}),
+        })
+    } catch (error) {
+        return res.status(500).json({error: "gagal refresh token"});
     }
 })
 
-//put dokter/developer/client sama tinggal ubah dikit aq blm cek ini jadi gak langsung ta copas"
-app.put(`/receptionist`, async(req, res) =>{
+app.delete('/client', [verifyAuthToken, verifyUserAccessToken, UserIsClient], async (req, res)=>{
+    let data = await model.findBy("user_account", "email", req.user.email)
+    try {
+        if (await model.deleteAccount("user_account", req.user.email)) {
+            res.status(200).json({
+                message: `User ${data[0].username} berhasil delete account`
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({error: `User ${data[0].username} gagal delete account`});
+    } 
+})
+
+app.post('/client/topup', [verifyAuthToken, verifyUserAccessToken, UserIsClient], async (req, res)=>{
+    let saldo = req.body.saldo, cpass = req.body.confirm_password, data = await model.findBy("user_account", "email", req.user.email)
+    if (saldo.length < 1){
+        errorResult.saldo = 'Field Saldo tidak boleh kosong';
+    } else if (isNaN(saldo)){
+        errorResult.saldo = 'Input wajib angka';
+    }
+    if (cpass.length < 1){
+        errorResult.confirm_password = 'Field Confirm Password tidak boleh kosong';
+    } else {
+        if (!bcrypt.compareSync(cpass, data[0].password)) 
+            errorResult.password = `Field Confirm Password tidak sesuai`
+    }
+    if (!(Object.entries(errorResult).length === 0)) {
+        res.status(400).json({
+            listError: errorResult,
+        })
+    } else {
+        try {
+            let new_saldo = saldo + data[0].saldo
+            await dbase.executeQuery(`update user_account set saldo = '${saldo}' + saldo where email = '${req.user.email}'`)
+            return res.status(200).json({
+                saldo_awal: data[0].saldo,
+                saldo_akhir: new_saldo,
+                message: `User ${data[0].username} berhasil top up saldo`,
+            })
+        } catch (error) {
+            return res.status(500).json({error: `User ${data[0].username} gagal top up saldo`});
+        }
+    }
+})
+
+app.post('/client/subscription', [verifyAuthToken, verifyUserAccessToken, UserIsClient], async (req,res)=>{
+    let saldo = req.body.saldo, cpass = req.body.confirm_password, data = await model.findBy("user_account", "email", req.user.email)
+    if (saldo.length < 1){
+        errorResult.saldo = 'Field Saldo tidak boleh kosong';
+    } else if (isNaN(saldo)){
+        errorResult.saldo = 'Input Saldo wajib angka';
+    } else if (saldo < 100000) {
+        errorResult.saldo = 'Saldo tidak mencukupi';
+    }
+    if (cpass.length < 1){
+        errorResult.confirm_password = 'Field Confirm Password tidak boleh kosong';
+    } else {
+        if (!bcrypt.compareSync(cpass, data[0].password)) 
+            errorResult.password = `Field Confirm Password tidak sesuai`
+    }
+    if (!(Object.entries(errorResult).length === 0)) {
+        res.status(400).json({
+            listError: errorResult,
+        })
+    } else {
+        try {
+            let new_saldo = saldo + data[0].saldo, new_api_hit = 50 + data[0].api_hit
+            await dbase.executeQuery(`update user_account set saldo = '${saldo}' + saldo, api_hit = ${new_api_hit} where email = '${req.user.email}'`)
+            return res.status(200).json({
+                saldo_awal: data[0].saldo,
+                api_hit_awal: data[0].api_hit,
+                saldo_akhir: new_saldo,
+                api_hit_akhir: new_api_hit,
+                message: `User ${data[0].username} berhasil Subcription`,
+            })
+        } catch (error) {
+            return res.status(500).json({error: `User ${data[0].username} gagal Subcription`});
+        }
+    }
+})
+
+app.get('/client/consultation/', [verifyAuthToken, verifyUserAccessToken, UserIsClient], async (req,res)=> {
+    let data = await model.findBy("consultation", "email_user", req.user.email)
+    delete data.id
+    return res.status(200).json(data)
+})
+
+app.get(`/dokter/`,[verifyAuthToken, verifyUserAccessToken, UserIsDokter],async(req, res) =>{
+    let data = await model.findBy("user_account", "email", req.user.email);
+    delete data[0].password;
+    return res.status(200).json(data);
+})
+
+app.put(`/dokter/`,[verifyAuthToken, verifyUserAccessToken, UserIsDokter], async(req, res) =>{
+    let username = req.body.username_baru, name = req.body.name_baru, no_telp = req.body.no_telp_baru;
+    if (username.length < 1){
+        errorResult.username = 'Field Username tidak boleh kosong';
+    } else if (await model.checkBy("user_account", "username", username) > 0) {
+        errorResult.username = `username ${username} telah terdaftar pada sistem`
+    } else if (!await model.validateUsername(username)) {
+        errorResult.username = `username ${username} tidak valid`
+    }
+    if (name.length < 1){
+        errorResult.name = 'Field Name tidak boleh kosong';
+    }
+    if (isNaN(no_telp)){
+        errorResult.no_telp = 'Input Nomor Telepon wajib angka';
+    }
+    if (!(Object.entries(errorResult).length === 0)) {
+        res.status(400).json({
+            listError: errorResult,
+        })
+    } else {
+        try {
+            await model.updateClient(req.user.email, username, name, no_telp)
+            return res.status(200).json({message: `User ${username} Update Profile Berhasil`})
+        } catch (error) {
+            return res.status(500).json({error: "Update Profile Gagal"});
+        }
+    }
+})
+
+
+app.put('/dokter/changePassword', [verifyAuthToken, verifyUserAccessToken, UserIsDokter], async (req, res) =>{
+    if (req.body.new_password.length < 1) {
+        res.status(400).json({
+            error: `Field New Password tidak boleh kosong`
+        })
+    } else if (req.body.confirm_password.length < 1) {
+        res.status(400).json({
+            error: `Field Confirm Password tidak boleh kosong`
+        })
+    } else if (req.body.new_password != req.body.confirm_password) {
+        res.status(400).json({
+            error: `Field New Password dan Confirm Password tidak sama`
+        })
+    }
+    try {
+        let saltRounds = 10, hashedPassword = bcrypt.hashSync(req.body.new_password, saltRounds)
+        if (await model.changePass('user_account', hashedPassword, req.user.email)) {
+            let username = await model.getUsername("user_account", "email", req.user.email);
+            res.status(200).json({
+                message: `User ${username} Ganti Password Berhasil`,
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({error: "Ganti Password Gagal"});
+    }
+})
+
+app.post('/dokter/refresh', [verifyAuthToken, verifyUserAccessToken, UserIsDokter], async (req, res)=>{
+    try {
+        let data = await model.findBy("user_account", "email", req.user.email)
+        res.status(200).json({
+            message: `User ${data[0].username} berhasil refresh token`,
+            new_token: jsonwebtoken.sign({email: req.user.email, role: req.user.role}, `${process.env.USER_SECRET_KEY}`, {expiresIn: "10m"}),
+        })
+    } catch (error) {
+        return res.status(500).json({error: "gagal refresh token"});
+    }
+})
+
+app.delete('/dokter', [verifyAuthToken, verifyUserAccessToken, UserIsDokter], async (req, res)=>{
+    let data = await model.findBy("user_account", "email", req.user.email)
+    try {
+        if (await model.deleteAccount("user_account", req.user.email)) {
+            res.status(200).json({
+                message: `User ${data[0].username} berhasil delete account`
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({error: `User ${data[0].username} gagal delete account`});
+    } 
+})
+
+
+
+app.get(`/receptionist/`, [verifyAuthToken, verifyUserAccessToken, UserIsReceptionist],async(req, res) =>{
+    let data = await model.findBy("user_account", "email", req.user.email);
+    delete data[0].password;
+    return res.status(200).json(data);
+})
+
+app.put(`/receptionist/`,[verifyAuthToken, verifyUserAccessToken, UserIsReceptionist], async(req, res) =>{
+    let username = req.body.username_baru, name = req.body.name_baru, no_telp = req.body.no_telp_baru;
+    if (username.length < 1){
+        errorResult.username = 'Field Username tidak boleh kosong';
+    } else if (await model.checkBy("user_account", "username", username) > 0) {
+        errorResult.username = `username ${username} telah terdaftar pada sistem`
+    } else if (!await model.validateUsername(username)) {
+        errorResult.username = `username ${username} tidak valid`
+    }
+    if (name.length < 1){
+        errorResult.name = 'Field Name tidak boleh kosong';
+    }
+    if (isNaN(no_telp)){
+        errorResult.no_telp = 'Input Nomor Telepon wajib angka';
+    }
+    if (!(Object.entries(errorResult).length === 0)) {
+        res.status(400).json({
+            listError: errorResult,
+        })
+    } else {
+        try {
+            await model.updateClient(req.user.email, username, name, no_telp)
+            return res.status(200).json({message: `User ${username} Update Profile Berhasil`})
+        } catch (error) {
+            return res.status(500).json({error: "Update Profile Gagal"});
+        }
+    }
+})
+
+
+app.put('/receptionist/changePassword', [verifyAuthToken, verifyUserAccessToken, UserIsReceptionist], async (req, res) =>{
+    if (req.body.new_password.length < 1) {
+        res.status(400).json({
+            error: `Field New Password tidak boleh kosong`
+        })
+    } else if (req.body.confirm_password.length < 1) {
+        res.status(400).json({
+            error: `Field Confirm Password tidak boleh kosong`
+        })
+    } else if (req.body.new_password != req.body.confirm_password) {
+        res.status(400).json({
+            error: `Field New Password dan Confirm Password tidak sama`
+        })
+    }
+    try {
+        let saltRounds = 10, hashedPassword = bcrypt.hashSync(req.body.new_password, saltRounds)
+        if (await model.changePass('user_account', hashedPassword, req.user.email)) {
+            let username = await model.getUsername("user_account", "email", req.user.email);
+            res.status(200).json({
+                message: `User ${username} Ganti Password Berhasil`,
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({error: "Ganti Password Gagal"});
+    }
+})
+
+app.post('/receptionist/refresh', [verifyAuthToken, verifyUserAccessToken, UserIsReceptionist], async (req, res)=>{
+    try {
+        let data = await model.findBy("user_account", "email", req.user.email)
+        res.status(200).json({
+            message: `User ${data[0].username} berhasil refresh token`,
+            new_token: jsonwebtoken.sign({email: req.user.email, role: req.user.role}, `${process.env.USER_SECRET_KEY}`, {expiresIn: "10m"}),
+        })
+    } catch (error) {
+        return res.status(500).json({error: "gagal refresh token"});
+    }
+})
+
+app.delete('/receptionist', [verifyAuthToken, verifyUserAccessToken, UserIsReceptionist], async (req, res)=>{
+    let data = await model.findBy("user_account", "email", req.user.email)
+    try {
+        if (await model.deleteAccount("user_account", req.user.email)) {
+            res.status(200).json({
+                message: `User ${data[0].username} berhasil delete account`
+            })
+        }
+    } catch (error) {
+        return res.status(500).json({error: `User ${data[0].username} gagal delete account`});
+    } 
+})
+
+app.get('/jadwal/:', async (req, res)=>{
     const token = req.header("x-auth-token");
-    let nama = req.body.nama, tgl_lahir = req.body.tanggal_lahir, telp = req.body.no_telp, saldo = req.body.saldo
-    let user = {}, errorResult = {}
+    let tgl = req.body.tanggal.split('/');
+    let tanggal= tgl[2]+"-"+tgl[1]+"-"+tgl[0];
+    let users = await dbase.executeQueryWithParam(`select * from schedule where tanggal = '${tanggal}'`);
+    let user = {}, result = {};
+    let ress = [];
     if(!token){
-        errorResult.token = "Unauthorized"
+        msg = "Unauthorized"
         res.status(401).send("Unauthorized");
     }
     try{
-        user = jwt.verify(token, process.env.SECRET_KEY);
+        user = jsonwebtoken.verify(token,"218116679");
     }catch(err){
-        errorResult.token = "token salah"
+        msg = "token salah"
         res.status(401).send("Token Invalid");
     }
-    if (nama.length < 1) {
-        errorResult.nama = 'Nama tidak boleh kosong'
+    for(i of users){
+        result = {
+            "Email" : i.email,
+            "Doctor_name" : i.doctor_name,
+            "No_Telp" : i.no_telp
+        }
+        ress.push(result);
     }
-    if (tgl_lahir.length < 1) {
-        errorResult.tanggal_lahir = 'tanggal lahir tidak boleh kosong'
+    return res.status(200).send(ress);
+})
+
+app.post(`/jadwal/dokter`, async(req,res) =>{
+    const token = req.header("x-auth-token");
+    let user = {}
+    let tanggal = req.body.tanggal_praktek.split('/');
+    let tanggal_jadwal = tanggal[2]+"-"+tanggal[1]+"-"+tanggal[0];
+    let jam = req.body.waktu_praktek
+    if(!token){
+        msg = "Unauthorized"
+        res.status(401).send("Unauthorized");
     }
-    if (telp.length < 1) {
-        errorResult.telephon = 'no telp tidak boleh kosong'
+    try{
+        user = jwt.verify(token,process.env.SECRET_KEY);
+    }catch(err){
+        msg = "token salah"
+        res.status(401).send("Token Invalid");
     }
-    if (saldo.length < 1) {
-        errorResult.saldo = 'saldo tidak boleh kosong'
+    if (user.role != "dokter") {
+        res.status(404).send("Anda bukanlah dokter")
     }
-    let result = {
-        email : user.email,
-        nama : nama,
-        tanggal_lahir : tgl_lahir,
-        no_telp : telp,
-        saldo : saldo
-    }
-    if(await model.cekDataEmail(user.email)){
-        await model.updateData('client', user.email, nama, tgl_lahir, telp, saldo)
-        return res.status(200).send(result)
+    let dokter = await model.findBy("user_account", "email", user.email)
+    if(await dbase.executeQuery(`INSERT into schedule value('${dokter[0]['nama']}', '${tanggal_jadwal}', '${jam}',)`)){
+        let jadwal_now = await model.findBy("schedule", "tanggal", tanggal_jadwal)
+        return res.status(200).send(jadwal_now)
     }
 })
+
+app.get("/login/priaid",async function (req,res) {
+    const data = await axios.get("https://www.ehealthme.com/api/v1/ds/ginger/fever/");
+    console.log(data)
+
+    // var axios = require("axios").default;
+
+    // var options = {
+    //     method: 'GET',
+    //     url: 'https://priaid-symptom-checker-v1.p.rapidapi.com/body/locations/15',
+    //     params: {language: 'en-gb'},
+    //     headers: {
+    //       'x-rapidapi-key': 'a908fdc4e8msh48a917bda46e947p11d46ajsn7ccfe213a09e',
+    //       'x-rapidapi-host': 'priaid-symptom-checker-v1.p.rapidapi.com'
+    //     }
+    //   };
+      
+    //   axios.request(options).then(function (response) {
+    //       console.log(response.data);
+    //   }).catch(function (error) {
+    //       console.error(error);
+    //   });
+    
+});
 
 app.listen(process.env.PORT, () => {
     console.log(`Running to port ${process.env.PORT}`);
 });
 
-function dateFormat(dateTime) {
-    var date = new Date(dateTime.getTime());
-    date.setHours(0, 0, 0, 0);
-    return date;
-}
-
-// const express=require('express');
-// const app = express();
-// app.set('view engine','ejs');
-// const pengguna = require('./routes/pengguna');
-// const resep = require('./routes/resep');
-// const aksesapi = require('./routes/aksesapi');
-// app.use(express.urlencoded({extended:true}));
-// const jwt = require('jsonwebtoken');
-// require('dotenv').config();
-// console.log(process.env.secret);
-// // const useraktif = [{
-// //     "username":"admin",
-// //     "password":"admin",
-// //     "api_key":"abcde01234"
-// // }];
-// const useraktif = [
-//     {
-//         "username":"admin",
-//         "password":"admin",
-//         "is_admin":1
-//     },
-//     {
-//         "username":"upin",
-//         "password":"upin",
-//         "is_admin":0
-//     }
-// ];
-// // app.post("/api/register", (req, res) => {
-// //     const username = req.body.username;
-// //     const password = req.body.password;
-// //     const userbaru = {
-// //         "username": username,
-// //         "password": password,
-// //         "api_key": Math.random().toString(36).substr(2, 8)
-// //     };
-// //     useraktif.push(userbaru);
-// //     console.log(useraktif);
-// //     return res.status(201).send({"username": userbaru.username, "api_key": userbaru.api_key});
-// // });
-// app.post("/api/register", (req, res) => {
-//     const username = req.body.username;
-//     const password = req.body.password;
-//     const userbaru = {
-//         "username": username,
-//         "password": password,
-//         "is_admin": 0
-//     };
-//     useraktif.push(userbaru);
-//     console.log(useraktif);
-//     return res.status(201).send({"username": userbaru.username, "is_admin": userbaru.is_admin});
-// });
-// app.post("api/login", (req, res) => {
-//     const username = req.body.username;
-//     const password = req.body.password;
-//     let ada = null;
-//     for (let index = 0; index < useraktif.length; index++) {
-//         if (useraktif[index].username == username && useraktif[index].password == password) {            
-//             ada = useraktif[index];
-//         }
-//     }
-//     if (!ada) {
-//         return res.status(400).send({"msg": "Username atau Password salah"});
-//     }
-//     let token = jwt.sign({"username": ada.username, "is_admin": ada.is_admin}, process.env.secret, {notBefore: "20s"});
-//     return res.status(200).send({"token": token});
-// });
-// function cekJwt(req, res, next) {
-//     if (!req.headers["x-auth-token"]) {
-//         return res.status(401).send({"msg": "Token tidak ada"});
-//     }
-//     let token = req.headers["x-auth-token"];
-//     let user = null;
-//     try {
-//         user = jwt.verify(token, process.env.secret);
-//     } catch (error) {
-//         return res.status(400).send(error);
-//     }
-//     req.user = user;
-//     next();
+// function dateFormat(dateTime) {
+//     var date = new Date(dateTime.getTime());
+//     date.setHours(0, 0, 0, 0);
+//     return date;
 // }
-// // function cekApiKey(req, res, next) {
-// //     if (!req.headers["x-api-key"]) {
-// //         return res.status(401).send({"msg": "Anda tidak boleh mengakses API ini, sertakan API Key"});
-// //     }
-// //     let apikey = req.headers["x-api-key"];
-// //     let ada = false;
-// //     for (let index = 0; index < useraktif.length; index++) {
-// //         if (useraktif[index].api_key == apikey) {
-// //             ada = true;
-// //         }
-// //     }
-// //     if (!ada) {
-// //         return res.status(400).send({"msg": "API Key tidak terdaftar di sistem"});
-// //     }
-// //     req.isUserAktif = true;
-// //     next();
-// // }
-
-// // middleware
-// // app.get("/", cekApiKey, function (req,res) {
-// //     console.log(req.isUserAktif);
-// //     return res.render("displaymenu",{type:"Indonesian",menu:["batagor","rujak","kluntung"]})
-// // });
-
-// // middleware
-// app.get("/", cekJwt, function (req,res) {
-//     console.log(req.user);
-//     return res.render("displaymenu",{type:"Indonesian",menu:["batagor","rujak","kluntung"]})
-// });
-// app.use("/api/pengguna",pengguna);
-// app.use("/api/resep",resep);
-// app.use("/api/aksesapi",aksesapi);
-// app.listen(3000,function () {
-//     console.log("Listening to port 3000")
-// })

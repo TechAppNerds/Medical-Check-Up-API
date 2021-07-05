@@ -300,3 +300,34 @@ Method:POST; URL:/developer/photo; Status:400; Message: Bad Request; DateTime: 0
 Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 178 ms
 Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 161 ms
 Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 93 ms
+Method:POST; URL:/user/login; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 18 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 438 ms
+Method:GET; URL:/client; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 15 ms
+Method:POST; URL:/user/Register; Status:201; Message: Created; DateTime: 05/07/2021; ResponseTime: 538 ms
+Method:POST; URL:/user/Register; Status:undefined; Message: undefined; DateTime: 05/07/2021; ResponseTime: NaN ms
+Method:POST; URL:/user/Register; Status:201; Message: Created; DateTime: 05/07/2021; ResponseTime: 411 ms
+Method:POST; URL:/user/Register; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 18 ms
+Method:POST; URL:/user/Register; Status:201; Message: Created; DateTime: 05/07/2021; ResponseTime: 258 ms
+Method:POST; URL:/user/login; Status:undefined; Message: undefined; DateTime: 05/07/2021; ResponseTime: NaN ms
+Method:POST; URL:/user/login; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 162 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 1192 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 951 ms
+Method:POST; URL:/client/subscription; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 8 ms
+Method:POST; URL:/client/topup; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 134 ms
+Method:POST; URL:/client/subscription; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 1 ms
+Method:POST; URL:/client/subscription; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 1 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 443 ms
+Method:POST; URL:/client/subscription; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 40 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 693 ms
+Method:GET; URL:/client/consultation; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 37 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 484 ms
+Method:GET; URL:/client/consultation; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 22 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 661 ms
+Method:GET; URL:/client/consultation; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 28 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 470 ms
+Method:GET; URL:/client/consultation; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 100 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 470 ms
+Method:GET; URL:/client/consultation; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 27 ms
+Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 541 ms
+Method:GET; URL:/client/consultation; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 47 msMethod:GET; URL:/login/priaid; Status:undefined; Message: undefined; DateTime: 05/07/2021; ResponseTime: NaN ms
+Method:GET; URL:/login/priaid; Status:undefined; Message: undefined; DateTime: 05/07/2021; ResponseTime: NaN ms
