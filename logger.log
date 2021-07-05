@@ -261,3 +261,42 @@ Method:GET; URL:/receptionist; Status:200; Message: OK; DateTime: 04/07/2021; Re
 Method:POST; URL:/user/login; Status:200; Message: OK; DateTime: 04/07/2021; ResponseTime: 800 ms
 Method:GET; URL:/receptionist; Status:200; Message: OK; DateTime: 04/07/2021; ResponseTime: 56 ms
 Method:GET; URL:/receptionist; Status:200; Message: OK; DateTime: 04/07/2021; ResponseTime: 31 ms
+Method:GET; URL:/; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 94 ms
+Method:GET; URL:/; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 31 ms
+Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 172 ms
+Method:GET; URL:/developer/; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 1 ms
+Method:GET; URL:/developer/; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 1 ms
+Method:GET; URL:/developer/; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 0 ms
+Method:GET; URL:/developer/; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 0 ms
+Method:GET; URL:/developer/; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 0 ms
+Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 193 ms
+Method:GET; URL:/developer/; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 0 ms
+Method:GET; URL:/developer/; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 0 ms
+Method:GET; URL:/developer/; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 0 ms
+Method:GET; URL:/developer/; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 0 ms
+Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 165 ms
+Method:GET; URL:/developer/; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 0 ms
+Method:GET; URL:/developer/; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 0 ms
+Method:GET; URL:/developer/; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 0 ms
+Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 177 ms
+Method:GET; URL:/developer/; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 1 ms
+Method:GET; URL:/developer/; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 1 ms
+Method:POST; URL:/developer/register; Status:201; Message: Created; DateTime: 05/07/2021; ResponseTime: 154 ms
+Method:POST; URL:/developer/register; Status:201; Message: Created; DateTime: 05/07/2021; ResponseTime: 160 ms
+Method:POST; URL:/developer/register; Status:201; Message: Created; DateTime: 05/07/2021; ResponseTime: 171 ms
+Method:POST; URL:/developer/register; Status:201; Message: Created; DateTime: 05/07/2021; ResponseTime: 157 ms
+Method:POST; URL:/developer/register; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 52 ms
+Method:POST; URL:/developer/register; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 34 ms
+Method:POST; URL:/developer/register; Status:201; Message: Created; DateTime: 05/07/2021; ResponseTime: 175 ms
+Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 273 ms
+Method:GET; URL:/developer/; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 5 ms
+Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 164 ms
+Method:GET; URL:/developer/; Status:undefined; Message: undefined; DateTime: 05/07/2021; ResponseTime: NaN ms
+Method:GET; URL:/developer/; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 45 ms
+Method:GET; URL:/developer/; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 47 ms
+Method:POST; URL:/developer/photo; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 6 ms
+Method:POST; URL:/developer/photo; Status:401; Message: Unauthorized; DateTime: 05/07/2021; ResponseTime: 1 ms
+Method:POST; URL:/developer/photo; Status:400; Message: Bad Request; DateTime: 05/07/2021; ResponseTime: 15 ms
+Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 178 ms
+Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 161 ms
+Method:POST; URL:/developer/login; Status:200; Message: OK; DateTime: 05/07/2021; ResponseTime: 93 ms

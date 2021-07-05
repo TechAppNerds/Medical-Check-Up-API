@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 5.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 04 Jul 2021 pada 09.53
--- Versi server: 10.4.6-MariaDB
--- Versi PHP: 7.2.22
+-- Generation Time: Jul 05, 2021 at 03:05 AM
+-- Server version: 10.4.11-MariaDB
+-- PHP Version: 7.4.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -27,67 +27,58 @@ USE `proyek_soa`;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `client`
+-- Table structure for table `developer_account`
 --
 
-DROP TABLE IF EXISTS `client`;
-CREATE TABLE `client` (
-  `email` varchar(50) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `name` varchar(50) NOT NULL,
+DROP TABLE IF EXISTS `developer_account`;
+CREATE TABLE IF NOT EXISTS `developer_account` (
+  `email` varchar(100) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `profile_photo` varchar(20) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
-  `tanggal_lahir` date NOT NULL,
-  `no_telp` int(15) NOT NULL,
-  `saldo` int(10) NOT NULL,
-  `role` varchar(20) NOT NULL COMMENT 'dokter/client/receptionist'
+  `api_key` varchar(255) NOT NULL,
+  `api_hit` int(11) NOT NULL,
+  `account_type` enum('free','premium') NOT NULL,
+  PRIMARY KEY (`email`),
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `client`
+-- Dumping data for table `developer_account`
 --
 
-INSERT INTO `client` (`email`, `username`, `name`, `password`, `tanggal_lahir`, `no_telp`, `saldo`, `role`) VALUES
-('abc@d.com', 'bca', 'bca', '$2a$10$KC.qyauUwQkWj1oDF78rPebSknDN3/TJeGafUYtjs3bztn6aX3/DK', '1990-10-10', 1990122, 0, 'dokter'),
-('client@g.com', 'FirstClient', 'Nick', '$2a$10$mxxfs7Fz2jVW6MvZr.MJL.C8Fv1lXEJEhkm4Jg.DaN3kDUWZlqmq6', '2000-10-09', 998812, 5000, 'client'),
-('r@g.com', 'tion', 'tion', '$2a$10$xa4AS4d.Q66bbaHXXi4ASua5T/b6pqtGuTL33MeMR9SSM6RHbZ2b.', '1999-11-09', 22222, 0, 'receptionist');
+INSERT INTO `developer_account` (`email`, `username`, `name`, `profile_photo`, `password`, `api_key`, `api_hit`, `account_type`) VALUES
+('appgeeks@gmail.com', 'appnerds', 'Edwin Lo', NULL, '$2a$10$15m3pAyJiYoOMLuiThk7LOVW/FA2Ai3nFnZnpwkiSUN6Tf/EiyUMi', 'nereKWQz_CIOv/ScoDx+0WzfaGuPyiN6', 100, 'free'),
+('devgeeks123@gmail.com', 'appgeeks', 'Edwin Lo 1', NULL, '$2a$10$Z.XAS3lZDkCWFpUCFPppNeWI5if3xSBvAC.Rn5vs5t2KB21mRt/3q', 'ga0xXhvks7n8iFlCDu7q34rQuc1OwAKm', 100, 'free');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `developer`
+-- Table structure for table `user_account`
 --
 
-DROP TABLE IF EXISTS `developer`;
-CREATE TABLE `developer` (
+DROP TABLE IF EXISTS `user_account`;
+CREATE TABLE IF NOT EXISTS `user_account` (
   `email` varchar(100) NOT NULL,
   `username` varchar(20) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `tanggal_lahir` date NOT NULL,
+  `no_telp` varchar(15) NOT NULL,
+  `saldo` int(10) NOT NULL,
+  `role` enum('client','dokter','receptionist') NOT NULL COMMENT 'dokter/client/receptionist',
+  PRIMARY KEY (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data untuk tabel `developer`
+-- Dumping data for table `user_account`
 --
 
-INSERT INTO `developer` (`email`, `username`, `name`, `password`) VALUES
-('appgeeks@gmail.com', 'appnerds', 'Edwin Lo', '$2a$10$IaBQ5TqXKcKiDv9amQUbJ.vplitUGcgNaRpvcL91rt1yUaMPMwYJ2');
-
---
--- Indexes for dumped tables
---
-
---
--- Indeks untuk tabel `client`
---
-ALTER TABLE `client`
-  ADD PRIMARY KEY (`email`);
-
---
--- Indeks untuk tabel `developer`
---
-ALTER TABLE `developer`
-  ADD PRIMARY KEY (`email`),
-  ADD UNIQUE KEY `username` (`username`);
+INSERT INTO `user_account` (`email`, `username`, `name`, `password`, `tanggal_lahir`, `no_telp`, `saldo`, `role`) VALUES
+('abc@d.com', 'bca', 'bca', '$2a$10$KC.qyauUwQkWj1oDF78rPebSknDN3/TJeGafUYtjs3bztn6aX3/DK', '1990-10-10', '1990122', 0, 'dokter'),
+('client@g.com', 'FirstClient', 'Nick', '$2a$10$mxxfs7Fz2jVW6MvZr.MJL.C8Fv1lXEJEhkm4Jg.DaN3kDUWZlqmq6', '2000-10-09', '998812', 5000, 'client'),
+('r@g.com', 'tion', 'tion', '$2a$10$xa4AS4d.Q66bbaHXXi4ASua5T/b6pqtGuTL33MeMR9SSM6RHbZ2b.', '1999-11-09', '22222', 0, 'receptionist');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

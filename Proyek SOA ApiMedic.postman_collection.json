@@ -1,0 +1,2421 @@
+{
+	"info": {
+		"_postman_id": "bb264b91-c4c3-40f4-a2dd-42566ec8238c",
+		"name": "Proyek SOA ApiMedic",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Developer",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "devgeeks123@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "appgeeks",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "Edwin Lo",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "appgeeks_dev",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:3000/developer/register",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"developer",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "appgeeks@gmail.com",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "dev_appnerds",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:3000/developer/login",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"developer",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Account Data",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/developer/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"developer",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Profile Photo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/developer/photo",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"developer",
+								"photo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/developer/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"developer",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change Password",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "new_password",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "localhost:3000/developer/changePassword",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"developer",
+								"changePassword"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Register",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "username",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "name",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "tanggal_lahir",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "no_telp",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "saldo",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "role",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:3000/user/register",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Login",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "x-auth-token",
+										"value": "",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "email",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "localhost:3000/user/login",
+									"host": [
+										"localhost"
+									],
+									"port": "3000",
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Role",
+					"item": [
+						{
+							"name": "Client",
+							"item": [
+								{
+									"name": "Account Data",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Profile",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Change Password",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "new_password",
+													"value": "",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "localhost:3000/client/changePassword",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"changePassword"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Refresh Token",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/refresh",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"refresh"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Account",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Insert Measurement Data",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/Measurement",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"Measurement"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Measurement Data",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/Measurement/id",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"Measurement",
+												"id"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Measurement Data",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/Measurement/id",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"Measurement",
+												"id"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Join Consultation Room",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/Room/roomID",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"Room",
+												"roomID"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Chat Dokter",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/Chat/dokterID",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"Chat",
+												"dokterID"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Consultation Data",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/consultation/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"consultation",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Top Up Saldo",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/topup",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"topup"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Top Up Saldo History",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/client/transaction",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"client",
+												"transaction"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Dokter",
+							"item": [
+								{
+									"name": "Account Data",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/dokter/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"dokter",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Profile",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/dokter/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"dokter",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Change Password",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "new_password",
+													"value": "",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "localhost:3000/dokter/changePassword",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"dokter",
+												"changePassword"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Refresh Token",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/dokter/refresh",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"dokter",
+												"refresh"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Account",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/dokter/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"dokter",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create Room Consultation",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/dokter/Room",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"dokter",
+												"Room"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Chat Client",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/dokter/Chat/clientID",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"dokter",
+												"Chat",
+												"clientID"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Consultation Data",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/dokter/consultation/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"dokter",
+												"consultation",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Client Information Data",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/dokter/Client/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"dokter",
+												"Client",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Transaction History",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/dokter/transaction",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"dokter",
+												"transaction"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Receptionist",
+							"item": [
+								{
+									"name": "Account Data",
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/receptionist/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"receptionist",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Profile",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/receptionist/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"receptionist",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Change Password",
+									"request": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "urlencoded",
+											"urlencoded": [
+												{
+													"key": "new_password",
+													"value": "",
+													"type": "text"
+												}
+											]
+										},
+										"url": {
+											"raw": "localhost:3000/receptionist/changePassword",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"receptionist",
+												"changePassword"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Refresh Token",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/receptionist/refresh",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"receptionist",
+												"refresh"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete Account",
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/receptionist/",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"receptionist",
+												""
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Request for Booking Appointment Approval",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/receptionist/booking_appointment/idDokter",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"receptionist",
+												"booking_appointment",
+												"idDokter"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Approve or Reject Booking Appointments",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/receptionist/booking_appointment/idClient",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"receptionist",
+												"booking_appointment",
+												"idClient"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Chat Dokter",
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "x-auth-token",
+												"value": "",
+												"type": "text"
+											},
+											{
+												"key": "user-access-token",
+												"value": "",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "localhost:3000/receptionist/Chat/dokterID",
+											"host": [
+												"localhost"
+											],
+											"port": "3000",
+											"path": [
+												"receptionist",
+												"Chat",
+												"dokterID"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Booking Appointment",
+			"item": [
+				{
+					"name": "List All Dokter",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/booking_appointment/dokter",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"booking_appointment",
+								"dokter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List All Appointment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/booking_appointment/appointment",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"booking_appointment",
+								"appointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Booking Appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/booking_appointment",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"booking_appointment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Booking Appointment",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/booking_appointment/id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"booking_appointment",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Booking Appointment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/booking_appointment/id",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"booking_appointment",
+								"id"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Plan Subcribed by Appointment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/booking_appointment/availablePlan",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"booking_appointment",
+								"availablePlan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Subscription Plan by Booking Appointment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/booking_appointment/subscribe",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"booking_appointment",
+								"subscribe"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "History Subscription Plan by Booking  Appointment",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/booking_appointment/id/subscriptionHistory",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"booking_appointment",
+								"id",
+								"subscriptionHistory"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Measurement",
+			"item": [
+				{
+					"name": "Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/measurement/categories?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"measurement",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/measurement/categories?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"measurement",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/measurement/id?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"measurement",
+								"id"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/measurement/id?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"measurement",
+								"id"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Activity",
+			"item": [
+				{
+					"name": "Category",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/activity/categories?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"activity",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/activity/categories?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"activity",
+								"categories"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/activity/id?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"activity",
+								"id"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/activity/id?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"activity",
+								"id"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Appointment",
+			"item": [
+				{
+					"name": "List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/appointments?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/appointments/id?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments",
+								"id"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/appointments?filter=&token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": ""
+								},
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/appointments?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/appointments/id?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments",
+								"id"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/appointments/id?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments",
+								"id"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request to Dokter",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/appointments/id_dokter?token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"appointments",
+								"id_dokter"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Priaid Health Service",
+			"item": [
+				{
+					"name": "List of Symptoms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/symptoms?filter=&token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"symptoms"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": ""
+								},
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List of Issues",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/issues?filter=&token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"issues"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": ""
+								},
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Diagnosis from Symptoms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/diagnosis?token=&symptoms=&gender=&year_of_birth=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"diagnosis"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "symptoms",
+									"value": ""
+								},
+								{
+									"key": "gender",
+									"value": ""
+								},
+								{
+									"key": "year_of_birth",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Proposed Symptoms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/symptoms/proposed?filter=&token=&symptoms=&gender=&year_of_birth=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"symptoms",
+								"proposed"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": ""
+								},
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "symptoms",
+									"value": ""
+								},
+								{
+									"key": "gender",
+									"value": ""
+								},
+								{
+									"key": "year_of_birth",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List of Specialisations",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/specialisations?filter=&token=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"specialisations"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": ""
+								},
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View Specialisations suggested from Symptoms",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "x-auth-token",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/diagnosis/specialisations?token=&symptoms=&gender=&year_of_birth=&locale=&language=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"diagnosis",
+								"specialisations"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": ""
+								},
+								{
+									"key": "symptoms",
+									"value": ""
+								},
+								{
+									"key": "gender",
+									"value": ""
+								},
+								{
+									"key": "year_of_birth",
+									"value": ""
+								},
+								{
+									"key": "locale",
+									"value": ""
+								},
+								{
+									"key": "language",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

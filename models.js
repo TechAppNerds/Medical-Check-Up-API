@@ -1,90 +1,167 @@
-const dbase = require("./connection")
+const dbase = require("./connection");
+const generateApiKey = require('generate-api-key');
 
-const checkBy = async(table, by, value) => {
-    let result = await dbase.executeQueryWithParam(`select * from ${table} where lower(${by}) = lower(?)`,[value])
-    return result.length
-}
+// const checkBy = async(table, by, value) => {
+//     let result = await dbase.executeQueryWithParam(`select * from ${table} where lower(${by}) = lower(?)`,[value])
+//     return result.length
+// }
 
-const changePass = async( table, email, password) => {
-    return await dbase.executeQueryWithParam(`UPDATE ${table} SET password=${password} WHERE email = ${email}`) 
-}
+// const changePass = async( table, email, password) => {
+//     return await dbase.executeQueryWithParam(`UPDATE ${table} SET password=${password} WHERE email = ${email}`) 
+// }
 
-const updateData = async( table, email, name, tanggal_lahir, no_telp, saldo) => {
-    return await dbase.executeQueryWithParam(`UPDATE ${table} SET nama=${name}, tanggal_lahir = '${tanggal_lahir}', no_telp = '${no_telp}', saldo = '${saldo}' WHERE email = ${email}`) 
-}
+// const updateData = async( table, email, name, tanggal_lahir, no_telp, saldo) => {
+//     return await dbase.executeQueryWithParam(`UPDATE ${table} SET nama=${name}, tanggal_lahir = '${tanggal_lahir}', no_telp = '${no_telp}', saldo = '${saldo}' WHERE email = ${email}`) 
+// }
 
-const getAllUser = async(role) => {
-    let result = await dbase.executeQueryWithParam(`select * from client where role = lower('${role}')`)
-    return result.length
-}
+// const getAllUser = async(role) => {
+//     let result = await dbase.executeQueryWithParam(`select * from client where role = lower('${role}')`)
+//     return result.length
+// }
 
-const checkPassword = async(table, email, password) => {
-    let result = await dbase.executeQueryWithParam(`select * from ${table} where upper(email) = upper(?) and password = ?`,[email, password])
-    return result.length
-}
+// const checkPassword = async(table, email, password) => {
+//     let result = await dbase.executeQueryWithParam(`select * from ${table} where upper(email) = upper(?) and password = ?`,[email, password])
+//     return result.length
+// }
 
-const findBy = async(table, by, value) => {
-    return await dbase.executeQueryWithParam(`select * from ${table} where upper(${by}) = upper(?)`,[value])
-}
+// const findBy = async(table, by, value) => {
+//     return await dbase.executeQueryWithParam(`select * from ${table} where upper(${by}) = upper(?)`,[value])
+// }
 
-const getPassword = async(table, by, value) => {
-    let result = await dbase.executeQueryWithParam(`select password from ${table} where upper(${by}) = upper(?)`,[value])
-    return result[0].password
-}
+// const getPassword = async(table, by, value) => {
+//     let result = await dbase.executeQueryWithParam(`select password from ${table} where upper(${by}) = upper(?)`,[value])
+//     return result[0].password
+// }
 
-const validateEmail = async(email) => {
-    return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
-}
+// const validateEmail = async(email) => {
+//     return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
+// }
 
-const validateUsername = async(username) => {
-    return /^[a-zA-Z0-9-_]+$/.test(username)
-}
+// const validateUsername = async(username) => {
+//     return /^[a-zA-Z0-9-_]+$/.test(username)
+// }
 
-const registerDeveloper = async(email, username, name, password) => {
-    return await dbase.executeQueryWithParam(`insert into developer values(?,?,?,?)`,[email, username, name, password])
-}
+// const registerDeveloper = async(email, username, name, password) => {
+//     return await dbase.executeQueryWithParam(`insert into developer values(?,?,?,?)`,[email, username, name, password])
+// }
 
-const registerUser = async(email, username, name, password, tanggal_lahir, no_telp, saldo, role) => {
-    return await dbase.executeQuery(`insert into client values('${email}','${username}','${name}','${password}','${tanggal_lahir}','${no_telp}','${saldo}', '${role}')`)
-}
+// const registerUser = async(email, username, name, password, tanggal_lahir, no_telp, saldo, role) => {
+//     return await dbase.executeQuery(`insert into client values('${email}','${username}','${name}','${password}','${tanggal_lahir}','${no_telp}','${saldo}', '${role}')`)
+// }
 
-const cekDataEmail = async(email) =>{
-    return await dbase.executeQuery(`select * from client where email = '${email}'`);
-}
+// const cekDataEmail = async(email) =>{
+//     return await dbase.executeQuery(`select * from client where email = '${email}'`);
+// }
 
-const cekDataUsername = async (username) =>{
-    return await dbase.executeQuery(`select * from client where username = '${username}'`);
-}
+// const cekDataUsername = async (username) =>{
+//     return await dbase.executeQuery(`select * from client where username = '${username}'`);
+// }
 
-const loginClient = async (email, password) =>{
-    return await dbase.executeQuery(`select * from client where email = '${email}' and password = '${password}'`)
-}
+// const loginClient = async (email, password) =>{
+//     return await dbase.executeQuery(`select * from client where email = '${email}' and password = '${password}'`)
+// }
 
-const updateClient = async (email, username, name, no_telp) =>{
-    return await dbase.executeQuery(`update client set username=${username}, name=${name}, no_telp=${no_telp} where email=${email}`)
-}
+// const updateClient = async (email, username, name, no_telp) =>{
+//     return await dbase.executeQuery(`update client set username=${username}, name=${name}, no_telp=${no_telp} where email=${email}`)
+// }
 
-const updatePasswordClient = async (table, email, password) =>{
-    return await dbase.executeQueryWithParam(`UPDATE ${table} SET password=${password} WHERE email = ${email}`)
-}
+// const updatePasswordClient = async (table, email, password) =>{
+//     return await dbase.executeQueryWithParam(`UPDATE ${table} SET password=${password} WHERE email = ${email}`)
+// }
+
 module.exports = {
-    'checkBy' : checkBy,
-    'updateData' : updateData,
-    'getAllUser' : getAllUser,
-    'changePass' : changePass,
-    'checkPassword' : checkPassword,
-    'findBy' : findBy,
-    'getPassword' : getPassword,
-    'validateEmail' : validateEmail,
-    'validateUsername' : validateUsername,
-    'registerDeveloper' : registerDeveloper,
-    'registerUser' : registerUser,
-    'cekDataEmail' : cekDataEmail,
-    'cekDataUsername' : cekDataUsername,
-    'loginClient' : loginClient,
-    'updateClient' : updateClient,
-    'updatePasswordClient': updatePasswordClient
+    checkBy: async(table, by, value) => {
+        let result = await dbase.executeQueryWithParam(`select * from ${table} where lower(${by}) = lower(?)`,[value])
+        return result.length
+    },
+    changePass: async(table, email, password) => {
+        return await dbase.executeQueryWithParam(`UPDATE ${table} SET password=${password} WHERE email = ${email}`) 
+    },
+    updateData: async(table, email, name, tanggal_lahir, no_telp, saldo) => {
+        return await dbase.executeQueryWithParam(`UPDATE ${table} SET nama=${name}, tanggal_lahir = '${tanggal_lahir}', no_telp = '${no_telp}', saldo = '${saldo}' WHERE email = ${email}`) 
+    },
+    getAllUser: async(role) => {
+        let result = await dbase.executeQueryWithParam(`select * from client where role = lower('${role}')`)
+        return result.length
+    },
+    // ApiKeyGenerate: async() => {
+    //     // let kode = "", alphanum = "abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    //     // while (kode.length <= 31) {
+    //     //     let rand_num = (Math.floor(Math.random() * alphanum.length))
+    //     //     kode += alphanum.substring(rand_num, rand_num + 1)
+    //     // }
+    //     // return kode
+    //     return generateApiKey()
+    // },
+    checkPassword: async(table, email, password) => {
+        let result = await dbase.executeQueryWithParam(`select * from ${table} where upper(email) = upper(?) and password = ?`,[email, password])
+        return result.length
+    },
+    findBy: async(table, by, value) => {
+        return await dbase.executeQueryWithParam(`select * from ${table} where upper(${by}) = upper(?)`,[value])
+    },
+    getUsername: async(table, by, value) => {
+        let result = await dbase.executeQueryWithParam(`select username from ${table} where lower(${by}) = lower(?)`,[value])
+        return result[0].username
+    },
+    getPassword: async(table, by, value) => {
+        let result = await dbase.executeQueryWithParam(`select password from ${table} where upper(${by}) = upper(?)`,[value])
+        return result[0].password
+    },
+    validateEmail: async(email) => {
+        return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)
+    },
+    validateUsername: async(username) => {
+        return /^[a-zA-Z0-9-_]+$/.test(username)
+    },
+    registerDeveloper: async(email, username, name, password) => {
+        return await dbase.executeQueryWithParam(`insert into developer values(?,?,?,?,?,?,?,?)`,[email, username, name, , password, generateApiKey({method: 'string', length: 32}), 100, "free"])
+    },
+    uploadPhoto: async(photo, email) => {
+        return await dbase.executeQuery(`update developer set profile_photo = ${photo} where email = ${email}`)
+    },
+    updateDeveloper: async(username, name, email) => {
+        return await dbase.executeQuery(`update developer set username = '${username}', name = '${name}'  where email = ${email}`)
+    },
+    registerUser: async(email, username, name, password, tanggal_lahir, no_telp, saldo, role) => {
+        return await dbase.executeQuery(`insert into client values('${email}','${username}','${name}','${password}','${tanggal_lahir}','${no_telp}','${saldo}', '${role}')`)
+    },
+    cekDataEmail: async(email) =>{
+        return await dbase.executeQuery(`select * from client where email = '${email}'`);
+    },
+    cekDataUsername: async (username) =>{
+        return await dbase.executeQuery(`select * from client where username = '${username}'`);
+    },
+    loginClient: async (email, password) =>{
+        return await dbase.executeQuery(`select * from client where email = '${email}' and password = '${password}'`)
+    },
+    updateClient: async (email, username, name, no_telp) =>{
+        return await dbase.executeQuery(`update client set username=${username}, name=${name}, no_telp=${no_telp} where email=${email}`)
+    },
+    updatePasswordClient: async (table, email, password) =>{
+        return await dbase.executeQueryWithParam(`UPDATE ${table} SET password=${password} WHERE email = ${email}`)
+    },
 }
+
+
+// module.exports = {
+//     'checkBy' : checkBy,
+//     'updateData' : updateData,
+//     'getAllUser' : getAllUser,
+//     'changePass' : changePass,
+//     'checkPassword' : checkPassword,
+//     'findBy' : findBy,
+//     'getPassword' : getPassword,
+//     'validateEmail' : validateEmail,
+//     'validateUsername' : validateUsername,
+//     'registerDeveloper' : registerDeveloper,
+//     'registerUser' : registerUser,
+//     'cekDataEmail' : cekDataEmail,
+//     'cekDataUsername' : cekDataUsername,
+//     'loginClient' : loginClient,
+//     'updateClient' : updateClient,
+//     'updatePasswordClient': updatePasswordClient
+// }
 
 // const checkBy = async(by, value) => {
 //     let result = await dbase.executeQueryWithParam(`select * from user where lower(${by})=lower(?)`,[value])
