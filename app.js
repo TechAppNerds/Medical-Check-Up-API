@@ -11,6 +11,7 @@ const dbase = require("./connection");
 app.use(express.urlencoded({extended : false}));
 const bcrypt = require('bcryptjs');
 const jsonwebtoken = require('jsonwebtoken');
+const PORT = Process.env.PORT || 3000;
 require('dotenv').config();
 
 app.use(morgan((tokens, req, res) => {
@@ -1210,8 +1211,8 @@ app.get("/login/priaid",async function (req,res) {
     
 });
 
-app.listen(process.env.PORT, () => {
-    console.log(`Running to port ${process.env.PORT}`);
+app.listen(PORT, () => {
+    console.log(`Running to port ${PORT}`);
 });
 
 // function dateFormat(dateTime) {
